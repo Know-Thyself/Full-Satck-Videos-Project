@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-//import exampleresponse from './exampleresponse.json';
 import ReactPlayer from 'react-player';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -73,32 +72,33 @@ const YouTubeVideos = () => {
 
   const incrementRating = (e) => {
     const id = e.target.parentElement.id;
-    let likedVideo = videos.find((video) => video.id.toString() === id);
-    let updatedRating = likedVideo.rating + 1;
-    likedVideo = { ...likedVideo, rating: updatedRating }
-    const i = videos.findIndex((video) => video.id === likedVideo.id);
-    let newArray = [...videos];
-    newArray[i] = likedVideo;
-    setVideos(newArray);
+    const likedVideo = videos.find((video) => video.id.toString() === id);
+    const updatedRating = likedVideo.rating + 1;
+    const updatedVideo = { ...likedVideo, rating: updatedRating }
+    const newState = [...videos];
+    const i = newState.findIndex((video) => video.id === likedVideo.id);
+    newState[i] = updatedVideo;
+    setVideos(newState);
+
     const requestBody = { id: id, rating: updatedRating };
     fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
-
       })
       .catch((err) => console.log(err));
   };
 
   const decrementRating = (e) => {
     const id = e.target.parentElement.id;
-    let dislikedVideo = videos.find((video) => video.id.toString() === id);
-    let updatedRating = dislikedVideo.rating - 1;
-    dislikedVideo = { ...dislikedVideo, rating: updatedRating }
-    const i = videos.findIndex((video) => video.id === dislikedVideo.id);
-    let newArray = [...videos];
-    newArray[i] = dislikedVideo;
-    setVideos(newArray);
+    const dislikedVideo = videos.find((video) => video.id.toString() === id);
+    const updatedRating = dislikedVideo.rating - 1;
+    const updatedVideo = { ...dislikedVideo, rating: updatedRating }
+    const newState = [...videos];
+    const i = newState.findIndex((video) => video.id === dislikedVideo.id);
+    newState[i] = updatedVideo;
+    setVideos(newState);
+
     const requestBody = { id: id, rating: updatedRating };
     fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
       .then((res) => res.json())
@@ -118,7 +118,6 @@ const YouTubeVideos = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
-
       })
       .catch((err) => console.log(err));
     let remainingVideos = videos.filter(
@@ -132,7 +131,7 @@ const YouTubeVideos = () => {
       <div key='buttonAndSearch' className='add-button-and-search-wrapper'>
         <header className='App-header'>
           <div>
-            <Button className='ascending' onClick={ascendingOrder} variant='contained' color='primary'>
+            <Button className='ascending' onClick={ascendingOrder} variant='contained' color='default'>
               Ascending
             </Button>
           </div>
@@ -140,14 +139,12 @@ const YouTubeVideos = () => {
             <h1>Video Recommendation</h1>
           </div>
           <div>
-            <Button className='descending' onClick={descendingOrder} variant='contained' color='primary'>
+            <Button className='descending' onClick={descendingOrder} variant='contained' color='default'>
               Descending
             </Button>
           </div>
         </header>
-
         <UploadVideoForm addNewVideo={addNewVideo} />
-
         <div key='input-form' className='search-input-wrapper'>
           <i key='fasIcon' className='fas fa-search'></i>
           <input
@@ -162,9 +159,6 @@ const YouTubeVideos = () => {
       </div>
       <div key='displayWrapper' className='display-wrapper'>
         {videos.map((video, index) => {
-          // alternative way to embed YouTube videos
-          // const video_id = video.url.split('v=')[1];
-          // console.log(video_id);
           return (
             <div key={index} className='video-and-title'>
               <h4>{video.title}</h4>
@@ -182,7 +176,6 @@ const YouTubeVideos = () => {
                 Posted: {video.posted}
               </h6>
               <div className='buttons-container'>
-
                 <ThumbDownTwoToneIcon id={video.id}
                   onClick={decrementRating}
                   className='dislike'
@@ -190,7 +183,7 @@ const YouTubeVideos = () => {
                   fontSize='large'
                   aria-hidden='false'
                   variant='contained'
-                  style={{ color: '' }}
+                  style={{ color: 'black' }}
                 />
                 <Button id={video.id}
                   onClick={videoRemover}
@@ -201,7 +194,6 @@ const YouTubeVideos = () => {
                 >
                   Delete
                 </Button>
-
                 <ThumbUpAltTwoToneIcon id={video.id}
                   onClick={incrementRating}
                   className='like'
@@ -209,7 +201,7 @@ const YouTubeVideos = () => {
                   fontSize='large'
                   aria-hidden='false'
                   variant='contained'
-                  style={{ color: '' }}
+                  style={{ color: 'black' }}
                 />
               </div>
             </div>

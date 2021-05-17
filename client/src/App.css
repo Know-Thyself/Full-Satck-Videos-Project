@@ -4,6 +4,8 @@
   font-family: 'Courgette', cursive;
   text-align: center;
   background-color: #263238;
+  background-color: #7986cb;
+  background-color: silver;
 }
 
 .App-header {
@@ -11,6 +13,9 @@
   justify-content: space-evenly;
   font-family: 'Courgette', cursive;
   background-color: #000a12;
+  /* background-color: #49599a;
+  background-color: #002171;
+  background-color: #5472d3; */
   color: antiquewhite;
   padding: 1em;
   margin-bottom: 2em;
@@ -59,6 +64,9 @@
 
 .search-input-wrapper {
  background-color: #4f5b62;
+ background-color: #5472d3;
+ background-color: #4f5b62;
+ background-color: #000a12;;
  display: flex;
  width: 40%;
  align-items: center;
@@ -71,6 +79,7 @@
 
 .search-bar {
   background-color: #4f5b62;
+  background-color: #000a12;;
   color: #000a12;
   font-size: 1.25em;
   border-radius: 0.25em;
@@ -82,11 +91,13 @@
 
 .fa-search {
   color: #000a12;
+  color: silver;
   font-size: x-large;
 }
 
 ::placeholder {
   color: #000a12;
+  color: silver;
 }
 :-ms-input-placeholder {
   color: #000a12;
@@ -116,6 +127,7 @@
 
 .video-and-title {
   color: antiquewhite;
+  color: black;
   display: grid;
   grid-auto-rows: minmax(1em, auto);
   grid-auto-columns: minmax(10em, auto);
@@ -139,6 +151,7 @@
   margin: 0 0.5em 0 0.5em;
   font-size: xx-large;
   color: antiquewhite;
+  color: #000a12 !important;
 }
 
 

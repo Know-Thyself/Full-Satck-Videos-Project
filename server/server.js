@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 const path = require('path');
 const exampleresponse = require('../exampleresponse.json');
@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hello from server!" });
+  res.json({ message: 'Server is ready!' });
 });
 
 let videos = [];
@@ -87,7 +87,10 @@ app.post('/api', (req, res) => {
 app.patch('/api', (req, res) => {
   const videoToBeUpdated = videos.find(video => video.id.toString() === req.body.id);
   const updatedVideo = { ...videoToBeUpdated, rating: req.body.rating }
-  videos = [...videos, updatedVideo];
+  const overallUpdate = videos.filter(video => video !== videoToBeUpdated );
+  videos = [...overallUpdate, updatedVideo]
+  console.log(videos)
+  //videos = [...videos, updatedVideo];
   res.json({ message: `The rating of the video by the id: ${req.body.id} is successfully updated!` })
 })
 
@@ -104,7 +107,6 @@ app.delete('/api/:id', (req, res) => {
   // const found = videos.find(video => video.id === id);
   const remainingVideos = videos.filter(video => video.id !== id);
   videos = remainingVideos;
-
   if (id) {
     res.json({ Server: `A video by the id: ${id} is successfully deleted!` });
   } else res
@@ -113,5 +115,5 @@ app.delete('/api/:id', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
