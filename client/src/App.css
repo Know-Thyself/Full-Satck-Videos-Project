@@ -129,17 +129,18 @@
 }
 .buttons-container {
   display: inline-flexbox;
-  margin-top: -2em;
+  margin-top: 0.5em;
 }
 
 .like,
 .dislike {
   display: inline-block;
   cursor: pointer;
-  margin: 1em 1em 0 1em;
+  margin: 0 0.5em 0 0.5em;
   font-size: xx-large;
   color: antiquewhite;
 }
+
 
 @media screen and (min-width: 1025px) {
   .display-wrapper {

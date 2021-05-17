@@ -66,22 +66,30 @@ app.post('/api', (req, res) => {
       rating: '',
       posted: new Date().toString(),
     }]
-    console.log(videos.push(newVideo))
     videos.push(newVideo);
     res.status(201).json({
       Result: 'Success!',
-      Message: `Your video with a new id: ${Date.now()} is saved!`,
+      Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`,
     });
   } else if (title === '') {
     return res.json({
       Result: 'failure',
       message: 'Title should not be empty!',
     });
-  } else if (url === '' || !match) {
-    return res.json({ Result: 'failure', message: 'Invalid url!' });
+  } else if (url === '') {
+    return res.status(400).json({ Result: 'failure', message: 'You have not entered a url!' });
+  } else if (!match) {
+    return res.status(400).json({ Result: 'failure', message: 'Invalid url!' });
   }
- 
+
 });
+
+app.patch('/api', (req, res) => {
+  const videoToBeUpdated = videos.find(video => video.id.toString() === req.body.id);
+  const updatedVideo = { ...videoToBeUpdated, rating: req.body.rating }
+  videos = [...videos, updatedVideo];
+  res.json({ message: `The rating of the video by the id: ${req.body.id} is successfully updated!` })
+})
 
 app.get('/api/:id', (req, res) => {
   const id = req.params.id;
@@ -96,12 +104,12 @@ app.delete('/api/:id', (req, res) => {
   // const found = videos.find(video => video.id === id);
   const remainingVideos = videos.filter(video => video.id !== id);
   videos = remainingVideos;
-  
+
   if (id) {
     res.json({ Server: `A video by the id: ${id} is successfully deleted!` });
   } else res
-      .status(404)
-      .json({ Server: `A video by the id: ${id} could not be found!` });
+    .status(404)
+    .json({ Server: `A video by the id: ${id} could not be found!` });
 });
 
 app.listen(port, () => {

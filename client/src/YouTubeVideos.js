@@ -1,15 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 //import exampleresponse from './exampleresponse.json';
 import ReactPlayer from 'react-player';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import UploadVideoForm from './UploadVideoForm';
 import DeleteIcon from '@material-ui/icons/Delete';
-library.add(faThumbsUp);
-library.add(faThumbsDown);
+import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';
+import ThumbDownTwoToneIcon from '@material-ui/icons/ThumbDownTwoTone';
 
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
@@ -76,27 +73,44 @@ const YouTubeVideos = () => {
 
   const incrementRating = (e) => {
     const id = e.target.parentElement.id;
-    const likedVideo = videos.find((video) => video.id === id);
-    likedVideo.rating = likedVideo.rating + 1;
+    let likedVideo = videos.find((video) => video.id.toString() === id);
+    let updatedRating = likedVideo.rating + 1;
+    likedVideo = { ...likedVideo, rating: updatedRating }
     const i = videos.findIndex((video) => video.id === likedVideo.id);
     let newArray = [...videos];
     newArray[i] = likedVideo;
     setVideos(newArray);
+    const requestBody = { id: id, rating: updatedRating };
+    fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+
+      })
+      .catch((err) => console.log(err));
   };
 
   const decrementRating = (e) => {
     const id = e.target.parentElement.id;
-    const dislikedVideo = videos.find((video) => video.id.toString() === id);
-    dislikedVideo.rating = dislikedVideo.rating - 1;
+    let dislikedVideo = videos.find((video) => video.id.toString() === id);
+    let updatedRating = dislikedVideo.rating - 1;
+    dislikedVideo = { ...dislikedVideo, rating: updatedRating }
     const i = videos.findIndex((video) => video.id === dislikedVideo.id);
     let newArray = [...videos];
     newArray[i] = dislikedVideo;
     setVideos(newArray);
+    const requestBody = { id: id, rating: updatedRating };
+    fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+
+      })
+      .catch((err) => console.log(err));
   };
 
   const videoRemover = (e) => {
     const id = e.target.parentElement.id;
-    console.log(e.target.parentElement.id)
     fetch(`/api/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -104,7 +118,7 @@ const YouTubeVideos = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
-        
+
       })
       .catch((err) => console.log(err));
     let remainingVideos = videos.filter(
@@ -148,6 +162,7 @@ const YouTubeVideos = () => {
       </div>
       <div key='displayWrapper' className='display-wrapper'>
         {videos.map((video, index) => {
+          // alternative way to embed YouTube videos
           // const video_id = video.url.split('v=')[1];
           // console.log(video_id);
           return (
@@ -167,10 +182,15 @@ const YouTubeVideos = () => {
                 Posted: {video.posted}
               </h6>
               <div className='buttons-container'>
-                <FontAwesomeIcon id={video.id}
+
+                <ThumbDownTwoToneIcon id={video.id}
                   onClick={decrementRating}
                   className='dislike'
-                  icon={'thumbs-down'}
+                  icon={'ThumbUp'}
+                  fontSize='large'
+                  aria-hidden='false'
+                  variant='contained'
+                  style={{ color: '' }}
                 />
                 <Button id={video.id}
                   onClick={videoRemover}
@@ -180,11 +200,16 @@ const YouTubeVideos = () => {
                   startIcon={<DeleteIcon />}
                 >
                   Delete
-      </Button>
-                <FontAwesomeIcon id={video.id}
+                </Button>
+
+                <ThumbUpAltTwoToneIcon id={video.id}
                   onClick={incrementRating}
-                  className=' like'
-                  icon={'thumbs-up'}
+                  className='like'
+                  icon={'ThumbUp'}
+                  fontSize='large'
+                  aria-hidden='false'
+                  variant='contained'
+                  style={{ color: '' }}
                 />
               </div>
             </div>
