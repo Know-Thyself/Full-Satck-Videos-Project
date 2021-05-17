@@ -1,38 +1,25 @@
 import React, { useState } from 'react';
-//import Button from 'react-bootstrap/Button';
 import { Button } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UploadVideoForm = ({ addNewVideo }) => {
   const [reveal, setReveal] = useState(false);
-  const [controller, setController] = useState(false);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
-  const [newVideo, setNewVideo] = useState({});
 
   const addVideo = () => {
     setReveal(true);
   };
   const submitNewVideo = (e) => {
     e.preventDefault();
-    setController(true);
-    setNewVideo({ id: Date.now(), title: title, url: url, rating: '', posted: new Date().toString() });
+    const requestBody = {title: title, url: url.toString()}
+    fetch('/api', { method: 'POST', body: JSON.stringify(requestBody), headers: { 'Content-Type': 'application/json' }})
+      .then(response => response.json())
+      .then(data => console.log(data));
     addNewVideo(title, url);
     setTitle('');
     setUrl('');
-    setController(false)
   };
-
-  // if (controller) {
-  //   const rules = {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(newVideo),
-  //   };
-  //   fetch('http://127.0.0.1:5000', rules)
-  //     .then(response => response.json())
-  //     .then(data => console.log(data));
-  // }
 
   return (
     <div>

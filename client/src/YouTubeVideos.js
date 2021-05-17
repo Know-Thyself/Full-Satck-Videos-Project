@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import exampleresponse from './exampleresponse.json';
+import React, {useState, useEffect} from 'react';
+//import exampleresponse from './exampleresponse.json';
 import ReactPlayer from 'react-player';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,8 +12,37 @@ library.add(faThumbsUp);
 library.add(faThumbsDown);
 
 const YouTubeVideos = () => {
-  const [videos, setVideos] = useState(exampleresponse);
+  const [videos, setVideos] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  const [backupVideos, setBackupVideos] = useState([]);
+
+  useEffect(() => {
+    fetch('/api')
+      .then(res => res.json())
+      .then((data) => {
+        setVideos(data);
+        setBackupVideos(data);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  const ascendingOrder = () => {
+    fetch('/api/?order=asc')
+      .then((res) => res.json())
+      .then((data) => {
+        setVideos(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const descendingOrder = () => {
+    fetch('/api/?order=desc')
+      .then((res) => res.json())
+      .then((data) => {
+        setVideos(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const addNewVideo = (title, url) => {
     const regExp =
@@ -24,7 +53,7 @@ const YouTubeVideos = () => {
     } else if (url === '' || !match) {
       alert('Invalid url!');
     } else
-      setVideos([
+      return setVideos([
         {
           id: Date.now(),
           title: title,
@@ -36,28 +65,18 @@ const YouTubeVideos = () => {
       ]);
   };
 
-  const ascendingOrder = () => {
-    return videos.sort(
-      (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
-    );
-  }
-
-  const descendingOrder = () => {
-    return videos.sort((a, b) => b.rating - a.rating);
-  }
-
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value.toLowerCase());
     const searchResult = videos.filter((video) =>
       video.title.toLowerCase().includes(searchInput)
     );
     setVideos(searchResult);
-    if (e.target.value === '') window.location.reload();
+    if (e.target.value === '') setVideos(backupVideos);
   };
 
   const incrementRating = (e) => {
-    const id = e.target.parentElement.parentElement.id;
-    const likedVideo = videos.find((video) => video.id.toString() === id);
+    const id = e.target.parentElement.id;
+    const likedVideo = videos.find((video) => video.id === id);
     likedVideo.rating = likedVideo.rating + 1;
     const i = videos.findIndex((video) => video.id === likedVideo.id);
     let newArray = [...videos];
@@ -66,7 +85,7 @@ const YouTubeVideos = () => {
   };
 
   const decrementRating = (e) => {
-    const id = e.target.parentElement.parentElement.id;
+    const id = e.target.parentElement.id;
     const dislikedVideo = videos.find((video) => video.id.toString() === id);
     dislikedVideo.rating = dislikedVideo.rating - 1;
     const i = videos.findIndex((video) => video.id === dislikedVideo.id);
@@ -77,8 +96,22 @@ const YouTubeVideos = () => {
 
   const videoRemover = (e) => {
     const id = e.target.parentElement.id;
-    console.log(id);
-  }
+    console.log(e.target.parentElement.id)
+    fetch(`/api/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        
+      })
+      .catch((err) => console.log(err));
+    let remainingVideos = videos.filter(
+      (video) => video.id.toString() !== id
+    );
+    return setVideos(remainingVideos);
+  };
 
   return (
     <div key='mainWrapper'>
@@ -99,7 +132,7 @@ const YouTubeVideos = () => {
           </div>
         </header>
 
-        <UploadVideoForm UploadNewVideo={addNewVideo} />
+        <UploadVideoForm addNewVideo={addNewVideo} />
 
         <div key='input-form' className='search-input-wrapper'>
           <i key='fasIcon' className='fas fa-search'></i>
@@ -115,8 +148,8 @@ const YouTubeVideos = () => {
       </div>
       <div key='displayWrapper' className='display-wrapper'>
         {videos.map((video, index) => {
-          const video_id = video.url.split('v=')[1];
-          console.log(video_id);
+          // const video_id = video.url.split('v=')[1];
+          // console.log(video_id);
           return (
             <div key={index} className='video-and-title'>
               <h4>{video.title}</h4>
@@ -134,7 +167,7 @@ const YouTubeVideos = () => {
                 Posted: {video.posted}
               </h6>
               <div className='buttons-container'>
-                <FontAwesomeIcon
+                <FontAwesomeIcon id={video.id}
                   onClick={decrementRating}
                   className='dislike'
                   icon={'thumbs-down'}
@@ -148,7 +181,7 @@ const YouTubeVideos = () => {
                 >
                   Delete
       </Button>
-                <FontAwesomeIcon
+                <FontAwesomeIcon id={video.id}
                   onClick={incrementRating}
                   className=' like'
                   icon={'thumbs-up'}
