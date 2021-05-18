@@ -3,8 +3,8 @@
 .App {
   font-family: 'Courgette', cursive;
   text-align: center;
-  background-color: #263238;
-  background-color: #7986cb;
+  background-color: #c5cae9;
+  background-color: #94a0c7;
   background-color: silver;
 }
 
@@ -12,10 +12,7 @@
   display: flex;
   justify-content: space-evenly;
   font-family: 'Courgette', cursive;
-  background-color: #000a12;
-  /* background-color: #49599a;
-  background-color: #002171;
-  background-color: #5472d3; */
+  background-color: #372fa3;
   color: antiquewhite;
   padding: 1em;
   margin-bottom: 2em;
@@ -31,9 +28,6 @@
 
 .add-button {
   margin-bottom: 2em !important;
-  /* background-color: rgb(19, 18, 18) !important;
-  border-color: antiquewhite !important;
-  color: antiquewhite !important; */
 }
 
 .reveal-form {
@@ -50,23 +44,14 @@
   font-size: 1.5em;
 }
 
-.form-control::-webkit-input-placeholder {
-  color: antiquewhite;
-}
-
 .submit-btn {
-  /* background-color: rgb(19, 18, 18) !important;
-  border-color: antiquewhite !important;
-  color: antiquewhite !important; */
   margin-bottom: 2em !important;
   font-size: 1.3em;
 }
 
 .search-input-wrapper {
- background-color: #4f5b62;
- background-color: #5472d3;
- background-color: #4f5b62;
- background-color: #000a12;;
+ background-color: #372fa3;
+ color: silver;
  display: flex;
  width: 40%;
  align-items: center;
@@ -78,9 +63,8 @@
 }
 
 .search-bar {
-  background-color: #4f5b62;
-  background-color: #000a12;;
-  color: #000a12;
+  background-color: #372fa3;
+  color: silver;
   font-size: 1.25em;
   border-radius: 0.25em;
   padding-left: 0.5em;
@@ -90,20 +74,18 @@
 }
 
 .fa-search {
-  color: #000a12;
   color: silver;
   font-size: x-large;
 }
 
 ::placeholder {
-  color: #000a12;
   color: silver;
 }
 :-ms-input-placeholder {
-  color: #000a12;
+  color: silver;
 }
 ::-ms-input-placeholder {
-  color: #000a12;;
+  color: silver;
 }
 
 .embedded-video {
@@ -126,11 +108,16 @@
 }
 
 .video-and-title {
-  color: antiquewhite;
-  color: black;
+  color: #000a12;
   display: grid;
   grid-auto-rows: minmax(1em, auto);
   grid-auto-columns: minmax(10em, auto);
+}
+
+.title {
+  font-weight: bold;
+  max-width: 20em;
+  margin: auto;
 }
 
 .video-and-title:last-child:nth-child(3n - 2) {
@@ -138,19 +125,22 @@
 }
 .rating {
   margin-top: 0.5em;
+  font-weight: bold;
 }
 .buttons-container {
   display: inline-flexbox;
   margin-top: 0.5em;
 }
-
+.delete-button {
+  font-weight: bolder !important;
+}
 .like,
 .dislike {
   display: inline-block;
   cursor: pointer;
   margin: 0 0.5em 0 0.5em;
   font-size: xx-large;
-  color: antiquewhite;
+  font-weight: bolder;
   color: #000a12 !important;
 }
 

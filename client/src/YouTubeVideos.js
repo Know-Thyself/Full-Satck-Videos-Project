@@ -5,7 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UploadVideoForm from './UploadVideoForm';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';
-import ThumbDownTwoToneIcon from '@material-ui/icons/ThumbDownTwoTone';
+//import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
+//import ThumbDownAltRoundedIcon from '@material-ui/icons/ThumbDownAltRounded';
+import ThumbDownAltTwoToneIcon from '@material-ui/icons/ThumbDownAltTwoTone';
 
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
@@ -81,7 +83,7 @@ const YouTubeVideos = () => {
     setVideos(newState);
 
     const requestBody = { id: id, rating: updatedRating };
-    fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
+    fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'Field-Name': 'Accept-Patch' }, body: JSON.stringify(requestBody) })
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
@@ -161,7 +163,7 @@ const YouTubeVideos = () => {
         {videos.map((video, index) => {
           return (
             <div key={index} className='video-and-title'>
-              <h4>{video.title}</h4>
+              <h4 className='title'>{video.title}</h4>
               <ReactPlayer
                 width='560'
                 height='315'
@@ -176,20 +178,21 @@ const YouTubeVideos = () => {
                 Posted: {video.posted}
               </h6>
               <div className='buttons-container'>
-                <ThumbDownTwoToneIcon id={video.id}
+                <ThumbDownAltTwoToneIcon id={video.id}
                   onClick={decrementRating}
                   className='dislike'
                   icon={'ThumbUp'}
                   fontSize='large'
                   aria-hidden='false'
                   variant='contained'
-                  style={{ color: 'black' }}
+                  style={{ color: '#372fa3' }}
                 />
+              
                 <Button id={video.id}
                   onClick={videoRemover}
                   variant="contained"
                   color="secondary"
-                  className='button'
+                  className='delete-button'
                   startIcon={<DeleteIcon />}
                 >
                   Delete
@@ -201,7 +204,7 @@ const YouTubeVideos = () => {
                   fontSize='large'
                   aria-hidden='false'
                   variant='contained'
-                  style={{ color: 'black' }}
+                  style={{ color: '#372fa3' }}
                 />
               </div>
             </div>
