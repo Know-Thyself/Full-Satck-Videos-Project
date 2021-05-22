@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UploadVideoForm from './UploadVideoForm';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';
-//import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
-//import ThumbDownAltRoundedIcon from '@material-ui/icons/ThumbDownAltRounded';
-import ThumbDownAltTwoToneIcon from '@material-ui/icons/ThumbDownAltTwoTone';
+import Title from './Title';
+import EmbeddedVideos from './EmbeddedVideos';
+import Votes from './Votes';
+import LikeDislikeDelete from './LikeDislikeDelete';
 
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
@@ -56,7 +54,7 @@ const YouTubeVideos = () => {
           id: Date.now(),
           title: title,
           url: url,
-          rating: '',
+          rating: 0,
           posted: new Date().toString(),
         },
         ...videos,
@@ -72,17 +70,14 @@ const YouTubeVideos = () => {
     if (e.target.value === '') setVideos(backupVideos);
   };
 
-  const incrementRating = (e) => {
-    const id = e.target.parentElement.id;
-    const likedVideo = videos.find((video) => video.id.toString() === id);
-    const updatedRating = likedVideo.rating + 1;
-    const updatedVideo = { ...likedVideo, rating: updatedRating }
-    const newState = [...videos];
-    const i = newState.findIndex((video) => video.id === likedVideo.id);
-    newState[i] = updatedVideo;
-    setVideos(newState);
+  const voteUpdater = (videoObj, newVote) => {
+    let updatedVideo = { ...videoObj, rating: newVote };
+    let newData = [...videos];
+    const i = newData.findIndex((video) => video.id === videoObj.id);
+    newData[i] = updatedVideo;
+    setVideos(newData);
 
-    const requestBody = { id: id, rating: updatedRating };
+    const requestBody = { id: videoObj.id, rating: newVote };
     fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'Field-Name': 'Accept-Patch' }, body: JSON.stringify(requestBody) })
       .then((res) => res.json())
       .then((data) => {
@@ -91,28 +86,11 @@ const YouTubeVideos = () => {
       .catch((err) => console.log(err));
   };
 
-  const decrementRating = (e) => {
-    const id = e.target.parentElement.id;
-    const dislikedVideo = videos.find((video) => video.id.toString() === id);
-    const updatedRating = dislikedVideo.rating - 1;
-    const updatedVideo = { ...dislikedVideo, rating: updatedRating }
-    const newState = [...videos];
-    const i = newState.findIndex((video) => video.id === dislikedVideo.id);
-    newState[i] = updatedVideo;
-    setVideos(newState);
-
-    const requestBody = { id: id, rating: updatedRating };
-    fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const videoRemover = (e) => {
-    const id = e.target.parentElement.id;
+  const videoRemover = (id) => {
+    const remainingVideos = videos.filter(
+      (video) => video.id !== id
+    );
+    setVideos(remainingVideos);
     fetch(`/api/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -122,11 +100,7 @@ const YouTubeVideos = () => {
         console.log(data)
       })
       .catch((err) => console.log(err));
-    let remainingVideos = videos.filter(
-      (video) => video.id.toString() !== id
-    );
-    return setVideos(remainingVideos);
-  };
+  }
 
   return (
     <div key='mainWrapper'>
@@ -159,60 +133,24 @@ const YouTubeVideos = () => {
           />
         </div>
       </div>
-      <div key='displayWrapper' className='display-wrapper'>
+      <div key='displayWrapper' className='main-container'>
         {videos.map((video, index) => {
+          const video_id = video.url.split('v=')[1];
           return (
-            <div key={index} className='video-and-title'>
-              <h4 className='title'>{video.title}</h4>
-              <ReactPlayer
-                width='560'
-                height='315'
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                className='embedded-video'
-                allowFullScreen
-                frameBorder="0"
-                url={video.url}
-              />
-              <h5 className='rating'>Rating: {video.rating}</h5>
-              <h6 className={video.posted ? 'posted' : 'd-none'}>
+            <div key={index} className='video-and-details-wrapper'>
+              <Title title={video.title} />
+              <EmbeddedVideos id={video_id} />
+              <Votes vote={video.rating} />
+              {/* <h6 className={video.posted ? 'posted' : 'd-none'}>
                 Posted: {video.posted}
-              </h6>
-              <div className='buttons-container'>
-                <ThumbDownAltTwoToneIcon id={video.id}
-                  onClick={decrementRating}
-                  className='dislike'
-                  icon={'ThumbUp'}
-                  fontSize='large'
-                  aria-hidden='false'
-                  variant='contained'
-                  style={{ color: '#372fa3' }}
-                />
-              
-                <Button id={video.id}
-                  onClick={videoRemover}
-                  variant="contained"
-                  color="secondary"
-                  className='delete-button'
-                  startIcon={<DeleteIcon />}
-                >
-                  Delete
-                </Button>
-                <ThumbUpAltTwoToneIcon id={video.id}
-                  onClick={incrementRating}
-                  className='like'
-                  icon={'ThumbUp'}
-                  fontSize='large'
-                  aria-hidden='false'
-                  variant='contained'
-                  style={{ color: '#372fa3' }}
-                />
-              </div>
+              </h6> */}
+              <LikeDislikeDelete video={video} rating={video.rating} id={video.id} voteUpdater={voteUpdater} videoRemover={videoRemover} />
             </div>
           );
         })}
       </div>
     </div>
   );
-}
+};
 
 export default YouTubeVideos;

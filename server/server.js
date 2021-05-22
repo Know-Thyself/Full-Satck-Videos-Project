@@ -99,12 +99,10 @@ app.post('/api', (req, res) => {
 });
 
 app.patch('/api', (req, res) => {
-  const videoToBeUpdated = videos.find(video => video.id.toString() === req.body.id);
+  const videoToBeUpdated = videos.find(video => video.id === req.body.id);
   const updatedVideo = { ...videoToBeUpdated, rating: req.body.rating }
   const overallUpdate = videos.filter(video => video !== videoToBeUpdated );
-  videos = [...overallUpdate, updatedVideo]
-  console.log(videos)
-  //videos = [...videos, updatedVideo];
+  videos = [...overallUpdate, updatedVideo];
   res.json({ message: `The rating of the video by the id: ${req.body.id} is successfully updated!` })
 })
 

@@ -23,7 +23,7 @@ const UploadVideoForm = ({ addNewVideo }) => {
 
   return (
     <div>
-      <Button onClick={addVideo} className='add-button' variant='contained' color='primary'>
+      <Button onClick={addVideo} className='add-button' variant='contained' color='default'>
         Add Video
       </Button>
       <form
@@ -62,7 +62,7 @@ const UploadVideoForm = ({ addNewVideo }) => {
             Please make sure you enter a valid YouTube url.
           </small>
         </div>
-        <Button type='submit' className='submit-btn' variant='contained' color='primary'>
+        <Button type='submit' className='submit-btn' variant='contained' color='default'>
           Upload
         </Button>
       </form>
