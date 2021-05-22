@@ -23,13 +23,13 @@ function* flatten(array, depth) {
     } else {
       yield item;
     }
-  }
-}
+  };
+};
 
 videos = [...flatten(videos, Infinity)];
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, PATCH');
   res.setHeader('Access-Control-Allow-Headers', 'application/json');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -101,10 +101,10 @@ app.post('/api', (req, res) => {
 app.patch('/api', (req, res) => {
   const videoToBeUpdated = videos.find(video => video.id === req.body.id);
   const updatedVideo = { ...videoToBeUpdated, rating: req.body.rating }
-  const overallUpdate = videos.filter(video => video !== videoToBeUpdated );
+  const overallUpdate = videos.filter(video => video !== videoToBeUpdated);
   videos = [...overallUpdate, updatedVideo];
   res.json({ message: `The rating of the video by the id: ${req.body.id} is successfully updated!` })
-})
+});
 
 app.get('/api/:id', (req, res) => {
   const id = req.params.id;
@@ -116,7 +116,6 @@ app.get('/api/:id', (req, res) => {
 
 app.delete('/api/:id', (req, res) => {
   const id = req.params.id;
-  // const found = videos.find(video => video.id === id);
   const remainingVideos = videos.filter(video => video.id !== id);
   videos = remainingVideos;
   if (id) {
