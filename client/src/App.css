@@ -196,6 +196,16 @@ html, body {
 
 }
 
+@media screen and (min-width: 1560px) {
+    .main-container {
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    margin: auto;
+    gap: 2em;
+  }
+
+}
+
 
 /* @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css);
 @import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
