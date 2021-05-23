@@ -39,6 +39,7 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Origin',
     'Origin, X-Requested-With, Content-Type, Accept'
   );
+  res.cookie({ sameSite: 'none', secure: true });
   next();
 });
 
