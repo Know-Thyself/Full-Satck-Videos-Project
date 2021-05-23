@@ -35,10 +35,10 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.cookie('cookie1', 'value1', { sameSite: 'lax' });
   res.cookie('cookie2', 'value2', { sameSite: 'none', secure: true });
-  res.setHeader('set-cookie', [
-    'cookie1=value1; SameSite=Lax',
-    'cookie2=value2; SameSite=None; Secure',
-  ]);
+  // res.setHeader('set-cookie', [
+  //   'cookie1=value1; SameSite=Lax',
+  //   'cookie2=value2; SameSite=None; Secure',
+  // ]);
   res.header(
     'Access-Control-Allow-Headers',
     'Access-Control-Allow-Methods',
