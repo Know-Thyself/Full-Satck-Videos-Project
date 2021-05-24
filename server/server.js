@@ -60,27 +60,22 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api', (req, res) => {
-  let newVideo = [];
-  let title;
-  let url;
-  newVideo.push(req.body);
-  newVideo.map((video) => {
-    url = video.url;
-    title = video.title;
-  });
-
+  console.log(req.body.title)
+  let title = req.body.title;
+  let url = req.body.url;
+  let newVideo = {
+    id: Date.now(),
+    title: title,
+    url: url,
+    rating: 0,
+    posted: new Date().toString(),
+  };
   const regExp =
     /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
   const match = url.match(regExp);
   if (title !== '' && match) {
-    newVideo = [{
-      id: Date.now(),
-      title: title,
-      url: url,
-      rating: '',
-      posted: new Date().toString(),
-    }]
     videos.push(newVideo);
+    console.log(videos)
     res.status(201).json({
       Result: 'Success!',
       Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`,
@@ -99,10 +94,11 @@ app.post('/api', (req, res) => {
 });
 
 app.patch('/api', (req, res) => {
-  const videoToBeUpdated = videos.find(video => video.id === req.body.id);
-  const updatedVideo = { ...videoToBeUpdated, rating: req.body.rating }
-  const overallUpdate = videos.filter(video => video !== videoToBeUpdated);
-  videos = [...overallUpdate, updatedVideo];
+  let updatedVideo = req.body;
+  let newData = [...videos];
+  const i = newData.findIndex((video) => video.id === updatedVideo.id);
+  newData[i] = updatedVideo;
+  videos = newData;
   res.json({ message: `The rating of the video by the id: ${req.body.id} is successfully updated!` })
 });
 

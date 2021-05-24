@@ -12,11 +12,11 @@ const UploadVideoForm = ({ addNewVideo }) => {
   };
   const submitNewVideo = (e) => {
     e.preventDefault();
-    const requestBody = { title: title, url: url.toString() }
+    addNewVideo(title, url);
+    const requestBody = { title: title, url: url }
     fetch('/api', { method: 'POST', body: JSON.stringify(requestBody), headers: { 'Content-Type': 'application/json' } })
       .then(response => response.json())
       .then(data => console.log(data));
-    addNewVideo(title, url);
     setTitle('');
     setUrl('');
   };
