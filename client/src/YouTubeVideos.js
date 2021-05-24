@@ -48,8 +48,9 @@ const YouTubeVideos = () => {
       alert('Title should not be empty!');
     } else if (url === '' || !match) {
       alert('Invalid url!');
-    } else
-      return setVideos([
+    } else {
+      let newArray = [...videos];
+      newArray = [
         {
           id: Date.now(),
           title: title,
@@ -57,8 +58,10 @@ const YouTubeVideos = () => {
           rating: 0,
           posted: new Date().toString(),
         },
-        ...videos,
-      ]);
+        ...newArray,
+      ];
+      setVideos(newArray);
+    }
   };
 
   const handleSearchInput = (e) => {
