@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';

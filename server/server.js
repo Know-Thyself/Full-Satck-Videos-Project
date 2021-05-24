@@ -60,7 +60,6 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api', (req, res) => {
-  console.log(req.body.title)
   let title = req.body.title;
   let url = req.body.url;
   let newVideo = {
@@ -75,7 +74,6 @@ app.post('/api', (req, res) => {
   const match = url.match(regExp);
   if (title !== '' && match) {
     videos.push(newVideo);
-    console.log(videos)
     res.status(201).json({
       Result: 'Success!',
       Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`,

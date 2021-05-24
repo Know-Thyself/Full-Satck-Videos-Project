@@ -60,7 +60,6 @@ const YouTubeVideos = () => {
           posted: new Date().toString(),
         }
       ];
-      console.log(newArray)
       return setVideos(newArray);
     };
   };
@@ -81,9 +80,7 @@ const YouTubeVideos = () => {
       .catch((err) => console.log(err));
   };
   const stateUpdater = (updatedState) => {
-    console.log(updatedState)
     let newState = updatedState;
-    console.log(newState)
     return setVideos(newState);
   };
 
