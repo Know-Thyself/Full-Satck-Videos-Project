@@ -29,7 +29,7 @@ const LikeDislikeDeleteButtons = ({ video, videos, rating, id, stateUpdater, vid
         className='dislike'
         fontSize='large'
         variant='contained'
-        style={{ color: 'antiquewhite' }}
+        style={{ color: 'black' }}
       />
       <Button
         id={id}
@@ -46,7 +46,7 @@ const LikeDislikeDeleteButtons = ({ video, videos, rating, id, stateUpdater, vid
         className='like'
         fontSize='large'
         variant='contained'
-        style={{ color: 'antiquewhite' }}
+        style={{ color: 'black' }}
       />
     </div>
   );

@@ -110,8 +110,10 @@ html, body {
 
 .buttons-container {
   display: inline-flexbox;
+  background-color: silver;
   margin-top: -2em;
   width: 100%;
+  padding: 1.01em 0 1.01em 0;
 }
 
 .main-container {
