@@ -28,7 +28,7 @@ const UploadVideoForm = ({ addNewVideo }) => {
   };
 
   return (
-    <div>
+    <div className='upload-video-form-and-buttons'>
       <Button onClick={addVideo} className='add-button' 
       variant='contained' color='primary'>
         Add Video &nbsp;

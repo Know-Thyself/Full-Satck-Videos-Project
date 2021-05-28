@@ -4,6 +4,7 @@ const EmbeddedVideo = ({ id }) => {
   return (
     <div className='video-container'>
       <iframe
+        className='embedded-video'
         width='458'
         height='315'
         src={'https://www.youtube.com/embed/' + id}

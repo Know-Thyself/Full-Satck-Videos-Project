@@ -90,30 +90,27 @@ const YouTubeVideos = () => {
 
   return (
     <div key='mainWrapper'>
-      <div key='buttonAndSearch' className='add-button-and-search-wrapper'>
-        <Header/>
-        <UploadVideoForm addNewVideo={addNewVideo}/>
-        <SearchBar 
-        stateUpdater={stateUpdater} 
-        videos={backupVideos}/>
-      </div>
+      <Header />
+      <UploadVideoForm addNewVideo={addNewVideo} />
+      <SearchBar
+        stateUpdater={stateUpdater}
+        videos={backupVideos} />
       <div className='order'>
-        <div> 
-        <Button className='ascending' 
-        onClick={ascendingOrder} 
-        variant='contained' 
-        color='primary'>
+        <div>
+          <Button className='ascending'
+            onClick={ascendingOrder}
+            variant='contained'
+            color='primary'>
             Asc Order &nbsp;
-          <ArrowUpwardIcon/>
-        </Button>
-          
+            <ArrowUpwardIcon />
+          </Button>
         </div>
-        <Button className='descending' 
-        onClick={descendingOrder} 
-        variant='contained' 
-        color='primary'>
+        <Button className='descending'
+          onClick={descendingOrder}
+          variant='contained'
+          color='primary'>
           Desc Order &nbsp;
-          <ArrowDownwardIcon/>
+          <ArrowDownwardIcon />
         </Button>
       </div>
       <div key='displayWrapper' className='main-container'>
@@ -124,10 +121,10 @@ const YouTubeVideos = () => {
               <Title title={video.title} />
               <EmbeddedVideos id={video_id} />
               <Votes vote={video.rating} />
-              <LikeDislikeDeleteButtons 
-              video={video} rating={video.rating} 
-              id={video.id} stateUpdater={stateUpdater} 
-              videoRemover={videoRemover} videos={videos} />
+              <LikeDislikeDeleteButtons
+                video={video} rating={video.rating}
+                id={video.id} stateUpdater={stateUpdater}
+                videoRemover={videoRemover} videos={videos} />
             </div>
           );
         })}
