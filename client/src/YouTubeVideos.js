@@ -7,7 +7,7 @@ import SearchBar from './SearchBar'
 import Title from './Title';
 import EmbeddedVideos from './EmbeddedVideos';
 import Votes from './Votes';
-import LikeDislikeDeleteButtons from './LikeDislikeDeleteButtons';
+import DeleteButton from './DeleteButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
@@ -120,11 +120,11 @@ const YouTubeVideos = () => {
             <div key={index} className='video-and-details-wrapper'>
               <Title title={video.title} />
               <EmbeddedVideos id={video_id} />
-              <Votes vote={video.rating} />
-              <LikeDislikeDeleteButtons
-                video={video} rating={video.rating}
-                id={video.id} stateUpdater={stateUpdater}
-                videoRemover={videoRemover} videos={videos} />
+              <Votes vote={video.rating} video={video} 
+                videos={videos} rating={video.rating} stateUpdater={stateUpdater}/>
+              <DeleteButton
+                id={video.id} videoRemover={videoRemover} 
+                 />
             </div>
           );
         })}

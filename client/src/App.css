@@ -126,15 +126,13 @@ html, body {
 .video-title {
   font-size: x-large;
 }
-.votes {
-  margin-bottom: 1em;
-  font-size: larger;
-}
 
-.buttons-container {
-  display: inline-flexbox;
-  margin-top: -1em !important;
-  width: 100%;
+.votes-container {
+  display: inline-flex;
+}
+.votes {
+  font-size: larger;
+  margin-top: 0.25em;
 }
 
 .like,
