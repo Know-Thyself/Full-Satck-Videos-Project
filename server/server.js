@@ -22,13 +22,6 @@ const client = new Client({
   database: 'd55e7mui6ph6gm',
   password: '06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24'
 });
-// const dbConfig = {
-//   host: 'ec2-54-228-99-58.eu-west-1.compute.amazonaws.com',
-//   port: 5432,
-//   user: 'augnfuyknjbavd',
-//   database: 'd55e7mui6ph6gm',
-//   password: '06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24'
-// }
 
 client.connect();
 
@@ -46,39 +39,35 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-
-// app.get('/videos', async (req, result) => {
-//   client.query('SELECT * FROM videos;', (err, res) => {
-//     if (err) throw err;
-//     for (let row of res.rows) {
-//       console.log(JSON.stringify(row));
-//       result.json(res.rows)
-//     }
-//     client.end();
-//   });
-// });
 const videosQuery = 'SELECT * FROM videos';
 const videosAscQuery = 'SELECT * FROM videos ORDER BY rating ASC';
-const videosDescQuery = 'SELECT * FROM videos ORDER BY rating Desc';
+const videosDescQuery = 'SELECT * FROM videos ORDER BY rating DESC';
 
 app.get('/api', async (req, res) => {
-  try {
-    if (!req.query.order) {
+  if (!req.query.order) {
+    try {
       const result = await client.query(videosQuery);
       res.json(result.rows);
-    } else if (req.query.order === 'asc') {
-      const result = await client.query(videosAscQuery);
-      res.json(result.json);
-    } else if (req.query.order === 'desc') {
-      const result = await client.query(videosDescQuery);
-      res.json(result.json);
+    } catch (error) {
+      res.status(500).send(error);
     }
-  } catch (error) {
-    res.status(500).send(error);
+  } else if (req.query.order === 'asc') {
+    try {
+      const result = await client.query(videosAscQuery);
+      res.json(result.rows);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  } else if (req.query.order === 'desc') {
+    try {
+      const result = await client.query(videosDescQuery);
+      res.json(result.rows);
+    } catch (error) {
+      res.status(500).send(error);
+    }
   }
-});
+})
+
 
 app.get("/", (req, res) => {
   res.json({ message: 'Server is ready!' });
@@ -100,23 +89,6 @@ function* flatten(array, depth) {
 };
 
 videos = [...flatten(videos, Infinity)];
-
-// app.get('/api', (req, res) => {
-//   let copyVideos = [...videos];
-//   let copyVideos2 = [...videos];
-//   if (!req.query.order) res.json(videos);
-//   else if (req.query.order === 'asc') {
-//     const ascendingOrder = copyVideos.sort(
-//       (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
-//     );
-//     return res.json(ascendingOrder);
-//   } else if (req.query.order === 'desc') {
-//     const descendingOrder = copyVideos2.sort(
-//       (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
-//     );
-//     return res.json(descendingOrder);
-//   }
-// });
 
 app.post('/api', (req, res) => {
   let title = req.body.title;
