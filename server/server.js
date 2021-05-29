@@ -8,9 +8,6 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-// const DATABASE_URL = 'postgres://augnfuyknjbavd:06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24@ec2-54-228-99-58.eu-west-1.compute.amazonaws.com:5432/d55e7mui6ph6gm';
-
-
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -66,7 +63,7 @@ app.get('/api', async (req, res) => {
       res.status(500).send(error);
     }
   }
-})
+});
 
 
 app.get("/", (req, res) => {
@@ -104,11 +101,25 @@ app.post('/api', (req, res) => {
     /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
   const match = url.match(regExp);
   if (title !== '' && match) {
-    videos.push(newVideo);
-    res.status(201).json({
-      Result: 'Success!',
-      Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`,
-    });
+    //videos.push(newVideo);
+    // res.status(201).json({
+    //   Result: 'Success!',
+    //   Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`,
+    // });
+    const newID = newVideo.id;
+    const newTitle = newVideo.title;
+    const newURL = newVideo.url;
+    const newRating = newVideo.rating;
+    const newPosted = newVideo.posted;
+
+    const InsertQuery = 'INSERT INTO videos (id, title, url, rating, posted) VALUES ($1, $2, $3, $4, $5)';
+
+    client.query(InsertQuery, [newID, newTitle, newURL, newRating, newPosted])
+      .then(() => res.status(201).json({ 
+        Result: 'Success!', 
+        Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`
+      }))
+      .catch((err) => console.error(err));
   } else if (title === '') {
     return res.json({
       Result: 'failure',
