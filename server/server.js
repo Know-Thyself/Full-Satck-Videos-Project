@@ -101,11 +101,6 @@ app.post('/api', (req, res) => {
     /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
   const match = url.match(regExp);
   if (title !== '' && match) {
-    //videos.push(newVideo);
-    // res.status(201).json({
-    //   Result: 'Success!',
-    //   Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`,
-    // });
     const newID = newVideo.id;
     const newTitle = newVideo.title;
     const newURL = newVideo.url;
@@ -113,7 +108,6 @@ app.post('/api', (req, res) => {
     const newPosted = newVideo.posted;
 
     const InsertQuery = 'INSERT INTO videos (id, title, url, rating, posted) VALUES ($1, $2, $3, $4, $5)';
-
     client.query(InsertQuery, [newID, newTitle, newURL, newRating, newPosted])
       .then(() => res.status(201).json({ 
         Result: 'Success!', 
@@ -134,20 +128,25 @@ app.post('/api', (req, res) => {
 });
 
 app.patch('/api', (req, res) => {
-  let updatedVideo = req.body;
-  let newData = [...videos];
-  const i = newData.findIndex((video) => video.id === updatedVideo.id);
-  newData[i] = updatedVideo;
-  videos = newData;
-  res.json({ message: `The rating of the video by the id: ${req.body.id} is successfully updated!` })
+  const updatedRating = req.body.rating;
+  const videoID = req.body.id;
+  const voteQuery = `UPDATE videos SET rating=${updatedRating} WHERE id=${videoID}`;
+
+  client.query(voteQuery)
+    .then(() => res.json({message: `The vote of the video by the id ${videoID} is successfully updated!`}))
+    .catch((err) => console.error(err));
 });
 
-app.get('/api/:id', (req, res) => {
+app.get('/api/:id', async (req, res) => {
   const id = req.params.id;
-  const videoById = videos.find((video) => video.id.toString() === id);
-  if (videoById) res.json(videoById);
-  else
-    res.status(404).json({ message: `Video by id: ${id} could not be found!` });
+  const query = `SELECT * FROM videos WHERE id = ${id}`;
+  try {
+    const result = await client.query(query);
+    if (result.rowCount === 1) res.json(result.rows);
+    else res.status(404).json({ message: `Video by id: ${id} could not be found!` });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 app.delete('/api/:id', (req, res) => {
