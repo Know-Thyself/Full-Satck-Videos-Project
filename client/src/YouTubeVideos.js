@@ -16,7 +16,7 @@ const YouTubeVideos = () => {
   const [backupVideos, setBackupVideos] = useState([]);
 
   useEffect(() => {
-    fetch('/videos')
+    fetch('/api')
       .then(res => res.json())
       .then((data) => {
         console.log(data)
@@ -27,7 +27,7 @@ const YouTubeVideos = () => {
   }, []);
 
   const ascendingOrder = () => {
-    fetch('/videos/?order=asc')
+    fetch('/api/?order=asc')
       .then((res) => res.json())
       .then((data) => {
         setVideos(data);
@@ -36,7 +36,7 @@ const YouTubeVideos = () => {
   };
 
   const descendingOrder = () => {
-    fetch('/videos/?order=desc')
+    fetch('/api/?order=desc')
       .then((res) => res.json())
       .then((data) => {
         setVideos(data);
