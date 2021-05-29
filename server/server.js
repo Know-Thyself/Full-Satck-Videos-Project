@@ -1,4 +1,5 @@
 const express = require('express');
+const { Client } = require('pg');
 const app = express();
 const path = require('path');
 const exampleresponse = require('../exampleresponse.json');
@@ -6,6 +7,45 @@ const port = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
+
+// const DATABASE_URL = 'postgres://augnfuyknjbavd:06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24@ec2-54-228-99-58.eu-west-1.compute.amazonaws.com:5432/d55e7mui6ph6gm';
+
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+// const dbConfig = {
+//   host: 'ec2-54-228-99-58.eu-west-1.compute.amazonaws.com',
+//   port: 5432,
+//   user: 'augnfuyknjbavd',
+//   database: 'd55e7mui6ph6gm',
+//   password: '06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24'
+// }
+
+client.connect();
+
+
+
+
+app.get('/videos', async (req, result) => {
+  // try {
+  //   const result = await pool.query(customersQuery);
+  //   res.json(result.rows);
+  // } catch (error) {
+  //   res.status(500).send(error);
+  // }
+  client.query('SELECT * FROM videos;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+      result.json(res.rows)
+    }
+    client.end();
+  });
+});
 
 app.get("/", (req, res) => {
   res.json({ message: 'Server is ready!' });
