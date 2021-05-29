@@ -15,7 +15,12 @@ const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  host: 'ec2-54-228-99-58.eu-west-1.compute.amazonaws.com',
+  port: 5432,
+  user: 'augnfuyknjbavd',
+  database: 'd55e7mui6ph6gm',
+  password: '06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24'
 });
 // const dbConfig = {
 //   host: 'ec2-54-228-99-58.eu-west-1.compute.amazonaws.com',
@@ -27,24 +32,52 @@ const client = new Client({
 
 client.connect();
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'application/json');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Methods',
+    'Access-Control-Allow-Origin',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 
 
-app.get('/videos', async (req, result) => {
-  // try {
-  //   const result = await pool.query(customersQuery);
-  //   res.json(result.rows);
-  // } catch (error) {
-  //   res.status(500).send(error);
-  // }
-  client.query('SELECT * FROM videos;', (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-      result.json(res.rows)
+
+// app.get('/videos', async (req, result) => {
+//   client.query('SELECT * FROM videos;', (err, res) => {
+//     if (err) throw err;
+//     for (let row of res.rows) {
+//       console.log(JSON.stringify(row));
+//       result.json(res.rows)
+//     }
+//     client.end();
+//   });
+// });
+const videosQuery = 'SELECT * FROM videos';
+const videosAscQuery = 'SELECT * FROM videos ORDER BY rating ASC';
+const videosDescQuery = 'SELECT * FROM videos ORDER BY rating Desc';
+
+app.get('/api', async (req, res) => {
+  try {
+    if (!req.query.order) {
+      const result = await client.query(videosQuery);
+      res.json(result.rows);
+    } else if (req.query.order === 'asc') {
+      const result = await client.query(videosAscQuery);
+      res.json(result.json);
+    } else if (req.query.order === 'desc') {
+      const result = await client.query(videosDescQuery);
+      res.json(result.json);
     }
-    client.end();
-  });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 app.get("/", (req, res) => {
@@ -68,36 +101,22 @@ function* flatten(array, depth) {
 
 videos = [...flatten(videos, Infinity)];
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, PATCH');
-  res.setHeader('Access-Control-Allow-Headers', 'application/json');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Access-Control-Allow-Methods',
-    'Access-Control-Allow-Origin',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
-
-app.get('/api', (req, res) => {
-  let copyVideos = [...videos];
-  let copyVideos2 = [...videos];
-  if (!req.query.order) res.json(videos);
-  else if (req.query.order === 'asc') {
-    const ascendingOrder = copyVideos.sort(
-      (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
-    );
-    return res.json(ascendingOrder);
-  } else if (req.query.order === 'desc') {
-    const descendingOrder = copyVideos2.sort(
-      (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
-    );
-    return res.json(descendingOrder);
-  }
-});
+// app.get('/api', (req, res) => {
+//   let copyVideos = [...videos];
+//   let copyVideos2 = [...videos];
+//   if (!req.query.order) res.json(videos);
+//   else if (req.query.order === 'asc') {
+//     const ascendingOrder = copyVideos.sort(
+//       (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
+//     );
+//     return res.json(ascendingOrder);
+//   } else if (req.query.order === 'desc') {
+//     const descendingOrder = copyVideos2.sort(
+//       (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+//     );
+//     return res.json(descendingOrder);
+//   }
+// });
 
 app.post('/api', (req, res) => {
   let title = req.body.title;
