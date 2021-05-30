@@ -2,7 +2,6 @@ import React from 'react';
 
 const EmbeddedVideo = ({ id }) => {
   return (
-    <div className='video-container'>
       <iframe
         className='embedded-video'
         width='458'
@@ -13,7 +12,6 @@ const EmbeddedVideo = ({ id }) => {
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
         allowFullScreen
       ></iframe>
-    </div>
   );
 };
 
