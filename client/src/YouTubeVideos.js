@@ -8,6 +8,7 @@ import Title from './Title';
 import EmbeddedVideos from './EmbeddedVideos';
 import Votes from './Votes';
 import DeleteButton from './DeleteButton';
+import Footer from './Footer';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
@@ -129,6 +130,7 @@ const YouTubeVideos = () => {
           );
         })}
       </div>
+      <Footer/>
     </div>
   );
 };
