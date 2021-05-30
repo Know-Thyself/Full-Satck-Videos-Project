@@ -6,7 +6,7 @@ const DeleteButton = ({ id, videoRemover }) => {
 
 
   return (
-    <div className='delete-button'>
+    <div className='delete-button-container'>
       <Button
         id={id}
         onClick={() => videoRemover(id)}

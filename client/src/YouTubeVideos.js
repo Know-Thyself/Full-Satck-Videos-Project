@@ -19,7 +19,6 @@ const YouTubeVideos = () => {
     fetch('/api')
       .then(res => res.json())
       .then((data) => {
-        console.log(data)
         setVideos(data);
         setBackupVideos(data);
       })

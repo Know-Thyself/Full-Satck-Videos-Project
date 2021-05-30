@@ -56,8 +56,7 @@ html, body {
 }
 
 .search-input-wrapper {
- background-color: #100e26;
- color: silver;
+ background-color: #9f9deb;
  display: flex;
  width: 40%;
  align-items: center;
@@ -69,8 +68,7 @@ html, body {
 }
 
 .search-bar {
-  background-color: #100e26;
-  color: silver;
+  background-color: #9f9deb;
   font-size: 1.25em;
   border-radius: 0.25em;
   padding-left: 0.5em;
@@ -80,18 +78,18 @@ html, body {
 }
 
 .fa-search {
-  color: silver;
+  color: #100e26;
   font-size: x-large;
 }
 
 ::placeholder {
-  color: silver;
+  color: #100e26;
 }
 :-ms-input-placeholder {
-  color: silver;
+  color: #100e26;
 }
 ::-ms-input-placeholder {
-  color: silver;
+  color: #100e26;
 }
 
 .order {
@@ -105,30 +103,35 @@ html, body {
   color: antiquewhite;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 1fr;
-  /* grid-template-rows: repeat(auto, 1fr); */
   place-items: center;
-  /* background-color: #100e26; */
   width: 95%;
   gap: 2em;
   margin: auto;
+  padding-bottom: 5em;
 }
 
 .video-and-details-wrapper {
   display: grid;
   grid-template-rows: 1fr 4fr 0.5fr 0.5fr;
-  /* max-width: 458px; */
   place-items: center;
-  background-color: #1f213d;
-  background-color: #100e26;
   margin: auto;
 }
 
 .video-title {
   font-size: x-large;
+  width: 100%;
+  height: 100%;
+  background-color: #100e26;
+  display: grid;
+  place-items: center;
 }
 
 .votes-container {
   display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #9f9deb;
+  color: #100e26;
 }
 .votes {
   font-size: larger;
@@ -145,8 +148,13 @@ html, body {
 }
 
 .delete-button {
-  background-color: crimson !important;
+  background-color: #c0392b !important;
   font-weight: bold !important;
+}
+.delete-button-container {
+  width: 100%;
+ background-color: #9f9deb;
+  margin-top: -0.5em;
 }
 
 /* .video-and-details-wrapper:last-child:nth-child(3n - 2) {

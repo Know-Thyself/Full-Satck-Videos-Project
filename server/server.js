@@ -2,7 +2,6 @@ const express = require('express');
 const { Client } = require('pg');
 const app = express();
 const path = require('path');
-const exampleresponse = require('../exampleresponse.json');
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
@@ -64,23 +63,6 @@ app.get('/api', async (req, res) => {
 app.get("/", (req, res) => {
   res.json({ message: 'Server is ready!' });
 });
-
-let videos = [];
-videos.push(exampleresponse);
-function* flatten(array, depth) {
-  if (depth === undefined) {
-    depth = 1;
-  }
-  for (const item of array) {
-    if (Array.isArray(item) && depth > 0) {
-      yield* flatten(item, depth - 1);
-    } else {
-      yield item;
-    }
-  };
-};
-
-videos = [...flatten(videos, Infinity)];
 
 app.post('/api', (req, res) => {
   let title = req.body.title;

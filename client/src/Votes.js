@@ -22,16 +22,16 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 
   return (
     <div className='votes-container'>
-      <ThumbDownAltIcon
-        onClick={() => voteUpdater(video, rating - 1)}
-        className='dislike'
+      <ThumbUpAltIcon
+        onClick={() => voteUpdater(video, rating + 1)}
+        className='like'
         fontSize='large'
         variant='contained'
       />
       <h3 className='votes'>Votes: {vote}</h3>
-      <ThumbUpAltIcon
-        onClick={() => voteUpdater(video, rating + 1)}
-        className='like'
+      <ThumbDownAltIcon
+        onClick={() => voteUpdater(video, rating - 1)}
+        className='dislike'
         fontSize='large'
         variant='contained'
       />
