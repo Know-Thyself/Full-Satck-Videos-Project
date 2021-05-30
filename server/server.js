@@ -12,12 +12,7 @@ const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
-  },
-  host: 'ec2-54-228-99-58.eu-west-1.compute.amazonaws.com',
-  port: 5432,
-  user: 'augnfuyknjbavd',
-  database: 'd55e7mui6ph6gm',
-  password: '06bbf2f03faf5b7ab282ed1fc5ab4b08fa68fdd30815055cd82138e8f1c81c24'
+  }
 });
 
 client.connect();
@@ -109,8 +104,8 @@ app.post('/api', (req, res) => {
 
     const InsertQuery = 'INSERT INTO videos (id, title, url, rating, posted) VALUES ($1, $2, $3, $4, $5)';
     client.query(InsertQuery, [newID, newTitle, newURL, newRating, newPosted])
-      .then(() => res.status(201).json({ 
-        Result: 'Success!', 
+      .then(() => res.status(201).json({
+        Result: 'Success!',
         Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`
       }))
       .catch((err) => console.error(err));
@@ -120,9 +115,15 @@ app.post('/api', (req, res) => {
       message: 'Title should not be empty!',
     });
   } else if (url === '') {
-    return res.status(400).json({ Result: 'failure', message: 'You have not entered a url!' });
+    return res.status(400).json({
+      Result: 'failure',
+      message: 'You have not entered a url!'
+    });
   } else if (!match) {
-    return res.status(400).json({ Result: 'failure', message: 'Invalid url!' });
+    return res.status(400).json({
+      Result: 'failure',
+      message: 'Invalid url!'
+    });
   }
 
 });
@@ -133,7 +134,9 @@ app.patch('/api', (req, res) => {
   const voteQuery = `UPDATE videos SET rating=${updatedRating} WHERE id=${videoID}`;
 
   client.query(voteQuery)
-    .then(() => res.json({message: `The vote of the video by the id ${videoID} is successfully updated!`}))
+    .then(() => res.json({
+      message: `The vote of the video by the id ${videoID} is successfully updated!`
+    }))
     .catch((err) => console.error(err));
 });
 
@@ -143,7 +146,9 @@ app.get('/api/:id', async (req, res) => {
   try {
     const result = await client.query(query);
     if (result.rowCount === 1) res.json(result.rows);
-    else res.status(404).json({ message: `Video by id: ${id} could not be found!` });
+    else res.status(404).json({
+      message: `Video by id: ${id} could not be found!`
+    });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -151,15 +156,20 @@ app.get('/api/:id', async (req, res) => {
 
 app.delete('/api/:id', (req, res) => {
   const id = req.params.id;
-  const remainingVideos = videos.filter(video => video.id !== id);
-  videos = remainingVideos;
+  const deleteQuery = `DELETE FROM videos WHERE id=${id}`;
   if (id) {
-    res.json({ Server: `A video by the id: ${id} is successfully deleted!` });
+    client.query(deleteQuery)
+      .then(() => res.json({
+        Server: `A video by the id: ${id} is successfully deleted!`
+      }))
+      .catch((err) => console.error(err));
   } else res
     .status(404)
-    .json({ Server: `A video by the id: ${id} could not be found!` });
+    .json({
+      Server: `A video by the id: ${id} could not be found!`
+    });
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server is listening on port ${port} and ready to accept requests!`);
 });
