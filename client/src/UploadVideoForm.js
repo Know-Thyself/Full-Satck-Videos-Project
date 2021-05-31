@@ -24,7 +24,7 @@ const UploadVideoForm = ({ addNewVideo }) => {
       .then(data => console.log(data));
     setTitle('');
     setUrl('');
-    setReveal(false);
+    if (title !== '' && url !== '') setReveal(false);
   };
 
   return (
