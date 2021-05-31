@@ -22,9 +22,11 @@ const UploadVideoForm = ({ addNewVideo }) => {
     })
       .then(response => response.json())
       .then(data => console.log(data));
-    setTitle('');
-    setUrl('');
-    if (title !== '' && url !== '') setReveal(false);
+    if (title !== '' && url !== '') {
+      setTitle('');
+      setUrl('');
+      setReveal(false)
+    }
   };
 
   return (
