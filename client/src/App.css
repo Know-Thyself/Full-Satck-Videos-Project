@@ -51,8 +51,16 @@ html, body {
   font-size: 1.5em;
 }
 
-.submit-btn {
+/* .submit-btn {
   margin-bottom: 2em !important;
+} */
+.upload-and-cancel-buttons {
+  display: grid;
+  width: 50%;
+  margin: auto;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  margin-bottom: 2em;
 }
 
 .search-input-wrapper {
@@ -147,10 +155,6 @@ html, body {
   font-weight: bolder;
 }
 
-.delete-button {
-  background-color: #c0392b !important;
-  font-weight: bold !important;
-}
 .delete-button-container {
   width: 100%;
  background-color: #9f9deb;

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AddToQueueRoundedIcon from '@material-ui/icons/AddToQueueRounded';
 
 const UploadVideoForm = ({ addNewVideo }) => {
-  const [reveal, setReveal] = useState(false);
+  const [reveal, setReveal] = useState(false); 
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
 
@@ -13,7 +13,7 @@ const UploadVideoForm = ({ addNewVideo }) => {
   };
   const submitNewVideo = (e) => {
     e.preventDefault();
-    addNewVideo(title, url);
+    if (reveal) addNewVideo(title, url);
     const requestBody = { title: title, url: url }
     fetch('/api', { 
       method: 'POST', 
@@ -70,10 +70,14 @@ const UploadVideoForm = ({ addNewVideo }) => {
             Please make sure you enter a valid YouTube url.
           </small>
         </div>
-        <Button type='submit' className='submit-btn' 
-        variant='contained' color='primary'>
-          Upload
+        <div className='upload-and-cancel-buttons'>
+          <Button type='cancel' className='cancel-button'
+            variant='contained' color='secondary' onClick={() => setReveal(false)}>Cancel</Button>
+          <Button type='submit' className='submit-btn'
+            variant='contained' color='primary'>
+            Upload
         </Button>
+        </div>
       </form>
     </div>
   );
