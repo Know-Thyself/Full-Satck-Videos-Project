@@ -45,28 +45,18 @@ const YouTubeVideos = () => {
   };
 
   const addNewVideo = (title, url) => {
-    const regExp =
-      /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    const match = url.match(regExp);
-    if (title === '') {
-      alert('Title should not be empty!');
-    } else if (url === '' || !match) {
-      alert('Invalid url!');
-    } else {
-      let newArray = videos;
-      newArray = [
-        {
-          id: Date.now(),
-          title: title,
-          url: url,
-          rating: 0,
-          posted: new Date().toString(),
-        },
-        ...newArray
-      ];
-      alert('Your video is successfully uploaded!')
-      return setVideos(newArray);
-    };
+    let newArray = videos;
+    newArray = [
+      {
+        id: Date.now(),
+        title: title,
+        url: url,
+        rating: 0,
+        posted: new Date().toString(),
+      },
+      ...newArray
+    ];
+    return setVideos(newArray);
   };
 
   const videoRemover = (id) => {

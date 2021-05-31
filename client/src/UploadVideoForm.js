@@ -2,23 +2,41 @@ import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddToQueueRoundedIcon from '@material-ui/icons/AddToQueueRounded';
+import Alert from '@material-ui/lab/Alert';
 
 const UploadVideoForm = ({ addNewVideo }) => {
-  const [reveal, setReveal] = useState(false); 
+  const [reveal, setReveal] = useState(false);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [titleErrorAlert, setTitleErrorAlert] = useState(false);
+  const [urlErrorAlert, setUrlErrorAlert] = useState(false);
+  const [successAlert, setSuccessAlert] = useState(false);
 
   const addVideo = () => {
     setReveal(true);
   };
   const submitNewVideo = (e) => {
     e.preventDefault();
-    if (reveal) addNewVideo(title, url);
+    const regExp =
+      /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    const match = url.match(regExp);
+    if (title === '' && reveal) {
+      setTitleErrorAlert(true)
+    } else if ((url === '' || !match) && reveal) {
+      setUrlErrorAlert(true)
+    } else if (title !== '' && match && reveal) {
+      addNewVideo(title, url);
+      setSuccessAlert(true);
+      const alertTimer = () => {
+        setSuccessAlert(false)
+      }
+      setTimeout(alertTimer, 3000);
+    }
     const requestBody = { title: title, url: url }
-    fetch('/api', { 
-      method: 'POST', 
-      body: JSON.stringify(requestBody), 
-      headers: { 'Content-Type': 'application/json' } 
+    fetch('/api', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
     })
       .then(response => response.json())
       .then(data => console.log(data));
@@ -31,11 +49,16 @@ const UploadVideoForm = ({ addNewVideo }) => {
 
   return (
     <div className='upload-video-form-and-buttons'>
-      <Button onClick={addVideo} className='add-button' 
-      variant='contained' color='primary'>
+      <Button onClick={addVideo} className='add-button'
+        variant='contained' color='primary'>
         Add Video &nbsp;
         <AddToQueueRoundedIcon />
       </Button>
+      <div className='alert-messages'>
+        <Alert className={titleErrorAlert ? 'alert' : 'd-none'} severity='error' onClose={() => setTitleErrorAlert(false)}>Failure! — Title field should not be empty!</Alert>
+        <Alert className={urlErrorAlert ? 'alert' : 'd-none'} severity='error' onClose={() => setUrlErrorAlert(false)}>Failure! — You have not entered a valid URL!</Alert>
+        <Alert className={successAlert ? 'alert' : 'd-none'} onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
+      </div>
       <form
         onSubmit={submitNewVideo}
         className={reveal ? 'reveal-form' : 'd-none'}

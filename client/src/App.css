@@ -74,6 +74,12 @@ html, body {
  border-radius: 0.2em;
  margin-bottom: 2em;
 }
+.alert {
+  display: block;
+  width: 40%;
+  text-align: center;
+  margin: auto;
+}
 
 .search-bar {
   background-color: #9f9deb;
