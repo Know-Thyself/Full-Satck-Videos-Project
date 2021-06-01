@@ -2,7 +2,7 @@ import React from 'react';
 
 const Title = ({ title }) => {
   return (
-      <h2 key={title} className='video-title'>{title}</h2>
+    <h2 key={title} className='video-title'>{title}</h2>
   );
 };
 

@@ -12,9 +12,7 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
     const requestBody = updatedVideo;
     fetch('/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'Field-Name': 'Accept-Patch' }, body: JSON.stringify(requestBody) })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-      })
+      .then((data) => console.log(data))
       .catch((err) => console.log(err));
 
     return stateUpdater(newData);
