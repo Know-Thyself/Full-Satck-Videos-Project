@@ -22,9 +22,15 @@ html, body {
   font-family: 'Courgette', cursive;
   background-color: #100e26;
   background-color: #20203d;
+  background-color: #343353;
+  background-color: #494964;
+  background-color: #16132e;
+  
   color: aliceblue;
   width: 100%;
   padding: 1.5em;
+  background-color: #252336;
+  border-bottom-style: groove;
 }
 
 .upload-video-form-and-buttons {
@@ -132,8 +138,14 @@ html, body {
   font-size: x-large;
   width: 100%;
   height: 100%;
+  
   background-color: #9fa8da;
+  background-color: #503f61;
+  background-color: #3f2e50;
+ 
   background-color: #3f426d;
+  background-color: #393d68;
+  background-color: #343353;
   color: aliceblue;
   display: grid;
   place-items: center;
