@@ -20,9 +20,9 @@ html, body {
   margin: auto;
   text-align: center;
   font-family: 'Courgette', cursive;
-  background-color: #372fa3;
   background-color: #100e26;
-  color: antiquewhite;
+  background-color: #20203d;
+  color: aliceblue;
   width: 100%;
   padding: 1.5em;
 }
@@ -51,9 +51,6 @@ html, body {
   font-size: 1.5em;
 }
 
-/* .submit-btn {
-  margin-bottom: 2em !important;
-} */
 .upload-and-cancel-buttons {
   display: grid;
   width: 50%;
@@ -135,7 +132,9 @@ html, body {
   font-size: x-large;
   width: 100%;
   height: 100%;
-  background-color: #100e26;
+  background-color: #9fa8da;
+  background-color: #3f426d;
+  color: aliceblue;
   display: grid;
   place-items: center;
 }
@@ -163,8 +162,11 @@ html, body {
 
 .delete-button-container {
   width: 100%;
- background-color: #9f9deb;
+  background-color: #9f9deb;
   margin-top: -0.5em;
+}
+.delete-button {
+  background-color: crimson !important;
 }
 
 /* .video-and-details-wrapper:last-child:nth-child(3n - 2) {
