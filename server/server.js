@@ -59,7 +59,6 @@ app.get('/api', async (req, res) => {
   }
 });
 
-
 app.get("/", (req, res) => {
   res.json({ message: 'Server is ready!' });
 });
@@ -84,8 +83,8 @@ app.post('/api', (req, res) => {
     const newRating = newVideo.rating;
     const newPosted = newVideo.posted;
 
-    const InsertQuery = 'INSERT INTO videos (id, title, url, rating, posted) VALUES ($1, $2, $3, $4, $5)';
-    client.query(InsertQuery, [newID, newTitle, newURL, newRating, newPosted])
+    const InsertQuery = `INSERT INTO videos (id, title, url, rating, posted) VALUES (${newID}, ${newTitle}, ${newURL}, ${newRating}, ${newPosted})`;
+    client.query(InsertQuery)
       .then(() => res.status(201).json({
         Result: 'Success!',
         Message: `Your video is successfully uploaded and given a new id: ${Date.now()}!`
@@ -106,8 +105,8 @@ app.post('/api', (req, res) => {
       Result: 'failure',
       message: 'Invalid url!'
     });
-  }
-
+  };
+  
 });
 
 app.patch('/api', (req, res) => {
