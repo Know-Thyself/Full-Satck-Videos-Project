@@ -64,10 +64,10 @@ const UploadVideoModal = ({ addNewVideo }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Upload a video</Modal.Title>
+          <Modal.Title>Video Uploader Modal</Modal.Title>
         </Modal.Header>
         <Modal.Body className='modal-fullscreen-lg-down'>
-          Please enter the title and url of the video you would like to upload:
+          Please enter a title and a valid url of a video
           <TextField
             className='modal-content modal-text'
             autoFocus
@@ -93,7 +93,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
         <Modal.Footer>
           <div className='upload-and-cancel-buttons'>
             <Button type='cancel' className='cancel-button'
-              variant='contained' color='secondary' onClick={handleClose}>Cancel</Button>
+              variant='contained' color='default' onClick={handleClose}>Cancel</Button>
             <Button onClick={submitNewVideo} type='submit' className='submit-btn'
               variant='contained' color='primary'>
               Upload
