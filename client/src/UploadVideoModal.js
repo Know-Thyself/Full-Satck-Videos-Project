@@ -7,36 +7,36 @@ import Alert from '@material-ui/lab/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UploadVideoModal = ({ addNewVideo }) => {
-  const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
   const [titleErrorAlert, setTitleErrorAlert] = useState(false);
   const [urlErrorAlert, setUrlErrorAlert] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
 
-  const handleClose = () => {
-    setShow(false);
+  const cancelButtonHandler = () => {
+    setShowModal(false);
     setTitle('');
     setUrl('');
   };
-  const handleShow = () => setShow(true);
+  const handleShow = () => setShowModal(true);
 
   const submitNewVideo = (e) => {
     e.preventDefault();
     const regExp =
       /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     const match = url.match(regExp);
-    if (title === '' && show) {
+    if (title === '' && showModal) {
       setTitleErrorAlert(true)
-    } else if ((url === '' || !match) && show) {
+    } else if ((url === '' || !match) && showModal) {
       setUrlErrorAlert(true)
-    } else if (title !== '' && match && show) {
+    } else if (title !== '' && match) {
       addNewVideo(title, url);
       setSuccessAlert(true);
-      const alertTimer = () => {
+      const hideSuccessAlert = () => {
         setSuccessAlert(false)
       }
-      setTimeout(alertTimer, 4000);
+      setTimeout(hideSuccessAlert, 4000);
     }
     const requestBody = { title: title, url: url }
     fetch('/api', {
@@ -49,7 +49,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
     if (title !== '' && url !== '') {
       setTitle('');
       setUrl('');
-      setShow(false)
+      setShowModal(false)
     }
   };
 
@@ -64,8 +64,8 @@ const UploadVideoModal = ({ addNewVideo }) => {
       </Button>
       <Modal
         className='modal'
-        show={show}
-        onHide={handleClose}
+        show={showModal}
+        onHide={cancelButtonHandler}
         backdrop="static"
         keyboard={false}
       >
@@ -73,7 +73,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
           <Modal.Title>Video Uploader Modal</Modal.Title>
         </Modal.Header>
         <Modal.Body className='modal-fullscreen-lg-down'>
-          Please enter a title and a valid url of a video
+          Please enter a title and a valid url of a YouTube video
           <Alert className={titleErrorAlert ? 'alert-failure' : 'd-none'} severity='error' onClose={() => setTitleErrorAlert(false)}>Failure! — Title field should not be empty!</Alert>
           <TextField
             className='modal-content modal-text'
@@ -107,7 +107,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
         <Modal.Footer>
           <div className='upload-and-cancel-buttons'>
             <Button type='cancel' className='cancel-button'
-              variant='contained' color='default' onClick={handleClose}>Cancel</Button>
+              variant='contained' color='default' onClick={cancelButtonHandler}>Cancel</Button>
             <Button onClick={submitNewVideo} type='submit' className='submit-btn'
               variant='contained' color='primary'>
               Upload
