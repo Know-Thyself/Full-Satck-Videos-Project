@@ -26,37 +26,27 @@ html, body {
   padding: 1.5em;
 }
 
-.upload-video-form-and-buttons {
-  display: flexbox;
-  margin: auto;
-  text-align: center;
+.modal-backdrop {
+  background-color: #737fab;
+}
+.modal .modal-content {
+  background-color: #a9bcff;
+}
+.modal-text {
+  font-size: 1.2em !important;
+  background-color: #a9bcff !important;
 }
 
 .add-button {
   margin: 2em 0 2em 0 !important;
 }
 
-.reveal-form {
-  width: 40%;
-  margin: auto;
-}
-
-.form-control {
-  border-style: none;
-  font-size: 1.5em;
-}
-
-.form-submit {
-  font-size: 1.5em;
-}
-
 .upload-and-cancel-buttons {
   display: grid;
-  width: 50%;
+  width: 80%;
   margin: auto;
   grid-template-columns: repeat(2, 1fr);
   place-items: center;
-  margin-bottom: 2em;
 }
 
 .search-input-wrapper {

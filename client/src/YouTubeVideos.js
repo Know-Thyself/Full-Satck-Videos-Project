@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from '@material-ui/core/Button';
 import Header from './Header';
-import UploadVideoForm from './UploadVideoForm';
+//import UploadVideoForm from './UploadVideoForm';
 import SearchBar from './SearchBar'
 import Title from './Title';
 import EmbeddedVideos from './EmbeddedVideos';
@@ -11,6 +11,7 @@ import DeleteButton from './DeleteButton';
 import Footer from './Footer';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import UploadVideoModal from './UploadVideoModal';
 
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
@@ -80,7 +81,8 @@ const YouTubeVideos = () => {
   return (
     <div key='mainWrapper'>
       <Header />
-      <UploadVideoForm addNewVideo={addNewVideo} />
+      {/* <UploadVideoForm addNewVideo={addNewVideo} /> */}
+      <UploadVideoModal addNewVideo={addNewVideo}/>
       <SearchBar
         stateUpdater={stateUpdater}
         videos={backupVideos} />
