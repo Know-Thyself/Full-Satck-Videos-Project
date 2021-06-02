@@ -10,9 +10,15 @@ const UploadVideoModal = ({ addNewVideo }) => {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [titleErrorAlert, setTitleErrorAlert] = useState(false);
+  const [urlErrorAlert, setUrlErrorAlert] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setTitle('');
+    setUrl('');
+  };
   const handleShow = () => setShow(true);
 
   const submitNewVideo = (e) => {
@@ -21,16 +27,16 @@ const UploadVideoModal = ({ addNewVideo }) => {
       /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     const match = url.match(regExp);
     if (title === '' && show) {
-      alert('Title field should not be empty!');
+      setTitleErrorAlert(true)
     } else if ((url === '' || !match) && show) {
-      alert('Invalid URL!')
+      setUrlErrorAlert(true)
     } else if (title !== '' && match && show) {
       addNewVideo(title, url);
       setSuccessAlert(true);
       const alertTimer = () => {
         setSuccessAlert(false)
       }
-      setTimeout(alertTimer, 3000);
+      setTimeout(alertTimer, 4000);
     }
     const requestBody = { title: title, url: url }
     fetch('/api', {
@@ -49,8 +55,8 @@ const UploadVideoModal = ({ addNewVideo }) => {
 
   return (
     <>
-      <div className={successAlert ? 'alert' : 'd-none'}>
-        <Alert onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
+      <div className={successAlert ? 'success-alert' : 'd-none'}>
+        <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
       </div>
       <Button className='add-button' variant='contained' color='primary' onClick={handleShow}>
         Add Video &nbsp;
@@ -68,6 +74,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
         </Modal.Header>
         <Modal.Body className='modal-fullscreen-lg-down'>
           Please enter a title and a valid url of a video
+          <Alert className={titleErrorAlert ? 'alert-failure' : 'd-none'} severity='error' onClose={() => setTitleErrorAlert(false)}>Failure! — Title field should not be empty!</Alert>
           <TextField
             className='modal-content modal-text'
             autoFocus
@@ -76,9 +83,13 @@ const UploadVideoModal = ({ addNewVideo }) => {
             label="Title"
             type="text"
             fullWidth
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitleErrorAlert(false);
+              setTitle(e.target.value);
+            }}
             value={title}
           />
+          <Alert className={urlErrorAlert ? 'alert' : 'd-none'} severity='error' onClose={() => setUrlErrorAlert(false)}>Failure! — You have not entered a valid URL!</Alert>
           <TextField
             className='modal-content modal-text'
             margin="dense"
@@ -86,7 +97,10 @@ const UploadVideoModal = ({ addNewVideo }) => {
             label="URL"
             type="url"
             fullWidth
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={(e) => {
+              setUrlErrorAlert(false);
+              setUrl(e.target.value);
+            }}
             value={url}
           />
         </Modal.Body>
