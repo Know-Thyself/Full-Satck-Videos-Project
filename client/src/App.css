@@ -77,9 +77,6 @@ html, body {
   height: auto;
 }
 
-.modal-backdrop {
-  background-color: #737fab;
-}
 .modal .modal-content {
   background-color: #a9bcff;
 }
@@ -94,7 +91,7 @@ html, body {
   font-weight: bold !important;
 }
 .add-button:hover {
-  background-color: #b7b6fa !important;
+  background-color: #9390f1 !important;
 }
 
 .upload-and-cancel-buttons {

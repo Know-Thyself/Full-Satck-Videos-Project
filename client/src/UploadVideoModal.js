@@ -12,7 +12,6 @@ const UploadVideoModal = ({ addNewVideo }) => {
   const [url, setUrl] = useState('');
   const [titleErrorAlert, setTitleErrorAlert] = useState(false);
   const [urlErrorAlert, setUrlErrorAlert] = useState(false);
-  const [successAlert, setSuccessAlert] = useState(false);
 
   const cancelButtonHandler = () => {
     setShowModal(false);
@@ -32,11 +31,6 @@ const UploadVideoModal = ({ addNewVideo }) => {
       setUrlErrorAlert(true)
     } else if (title !== '' && match) {
       addNewVideo(title, url);
-      setSuccessAlert(true);
-      const hideSuccessAlert = () => {
-        setSuccessAlert(false)
-      }
-      setTimeout(hideSuccessAlert, 4000);
     }
     const requestBody = { title: title, url: url }
     fetch('/api', {
@@ -55,9 +49,6 @@ const UploadVideoModal = ({ addNewVideo }) => {
 
   return (
     <>
-      <div className={successAlert ? 'success-alert' : 'd-none'}>
-        <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
-      </div>
       <Button className='add-button' variant='contained' onClick={handleShow}>
         Add Video &nbsp;
         <AddToQueueRoundedIcon />

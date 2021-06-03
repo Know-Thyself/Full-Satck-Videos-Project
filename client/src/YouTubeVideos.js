@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import UploadVideoModal from './UploadVideoModal';
+import Alert from '@material-ui/lab/Alert';
 import Header from './Header';
 import SearchBar from './SearchBar'
 import Title from './Title';
@@ -15,6 +16,7 @@ import Footer from './Footer';
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
   const [backupVideos, setBackupVideos] = useState([]);
+  const [successAlert, setSuccessAlert] = useState(false);
 
   useEffect(() => {
     fetch('/api')
@@ -56,6 +58,11 @@ const YouTubeVideos = () => {
       },
       ...newArray
     ];
+    setSuccessAlert(true);
+    const hideSuccessAlert = () => {
+      setSuccessAlert(false)
+    }
+    setTimeout(hideSuccessAlert, 4000);
     return setVideos(newArray);
   };
 
@@ -80,6 +87,9 @@ const YouTubeVideos = () => {
   return (
     <div key='mainWrapper'>
       <Header />
+      <div className={successAlert ? 'success-alert' : 'd-none'}>
+        <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
+      </div>
       <SearchBar
         stateUpdater={stateUpdater}
         videos={backupVideos} />
