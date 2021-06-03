@@ -15,6 +15,8 @@ const UploadVideoModal = ({ addNewVideo }) => {
 
   const cancelButtonHandler = () => {
     setShowModal(false);
+    setTitleErrorAlert(false);
+    setUrlErrorAlert(false)
     setTitle('');
     setUrl('');
   };
@@ -73,6 +75,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
             id="title"
             label="Title"
             type="text"
+            style={{color:'red'}}
             fullWidth
             onChange={(e) => {
               setTitleErrorAlert(false);
