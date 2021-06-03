@@ -58,7 +58,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
       <div className={successAlert ? 'success-alert' : 'd-none'}>
         <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
       </div>
-      <Button className='add-button' variant='contained' color='primary' onClick={handleShow}>
+      <Button className='add-button' variant='contained' onClick={handleShow}>
         Add Video &nbsp;
         <AddToQueueRoundedIcon />
       </Button>

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from '@material-ui/core/Button';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import UploadVideoModal from './UploadVideoModal';
 import Header from './Header';
-//import UploadVideoForm from './UploadVideoForm';
 import SearchBar from './SearchBar'
 import Title from './Title';
 import EmbeddedVideos from './EmbeddedVideos';
 import Votes from './Votes';
 import DeleteButton from './DeleteButton';
 import Footer from './Footer';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import UploadVideoModal from './UploadVideoModal';
 
 const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
@@ -81,22 +80,21 @@ const YouTubeVideos = () => {
   return (
     <div key='mainWrapper'>
       <Header />
-      {/* <UploadVideoForm addNewVideo={addNewVideo} /> */}
-      <UploadVideoModal addNewVideo={addNewVideo}/>
       <SearchBar
         stateUpdater={stateUpdater}
         videos={backupVideos} />
-      <div className='order'>
-        <div>
-          <Button className='ascending'
-            onClick={ascendingOrder}
-            variant='contained'
-            color='primary'>
-            Asc Order &nbsp;
-            <ArrowUpwardIcon />
-          </Button>
-        </div>
-        <Button className='descending'
+      <div className='main-buttons'>
+        <Button className='inline-button'
+          onClick={ascendingOrder}
+          variant='contained'
+          color='primary'>
+          Asc Order &nbsp;
+          <ArrowUpwardIcon />
+        </Button>
+        <div className="divider" />
+        <UploadVideoModal className='inline-button' addNewVideo={addNewVideo} />
+        <div className="divider" />
+        <Button className='inline-button'
           onClick={descendingOrder}
           variant='contained'
           color='primary'>
