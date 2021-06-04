@@ -122,7 +122,7 @@ const YouTubeVideos = () => {
               <Votes vote={video.rating} video={video} 
                 videos={videos} rating={video.rating} stateUpdater={stateUpdater}/>
               <DeleteButton
-                id={video.id} videoRemover={videoRemover} 
+                id={video.id} videoRemover={videoRemover} title={video.title}
                  />
             </div>
           );
