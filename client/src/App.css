@@ -41,20 +41,22 @@ html, body {
 
 .search-bar {
   background-color: #9f9deb;
-  font-size: 1.5em;
+  font-size: 1.25em;
+  font-weight: lighter;
   border-radius: 0.25em;
-  width: 95%;
+  width: 90%;
   border: none;
   outline: none;
 }
 
 .fa-search {
   color: #100e26;
-  font-size: xx-large;
+  font-size: x-large;
 }
 
 ::placeholder {
   color: #100e26;
+  font-size: x-large;
 }
 :-ms-input-placeholder {
   color: #100e26;
@@ -83,6 +85,7 @@ html, body {
   margin: auto;
   text-align: center;
   color: aliceblue;
+  font-size: large;
 }
 
 .modal .modal-content {

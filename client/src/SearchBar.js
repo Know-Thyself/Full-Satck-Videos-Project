@@ -14,7 +14,6 @@ const SearchBar = ({ stateUpdater, videos }) => {
 
   return (
     <div key='input-form' className='search-input-wrapper'>
-      <i key='fasIcon' className='fas fa-search'></i>
       <input
         key='search-input'
         type='text'
@@ -23,6 +22,7 @@ const SearchBar = ({ stateUpdater, videos }) => {
         value={searchInput}
         onChange={handleSearchInput}
       />
+      <i key='fasIcon' className='fas fa-search'></i>
     </div>
   );
 };
