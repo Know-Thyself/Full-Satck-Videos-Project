@@ -86,13 +86,16 @@ const YouTubeVideos = () => {
 
   return (
     <div key='mainWrapper'>
-      <Header />
+      <div className='App-header'>
+        <Header />
+        <SearchBar
+          stateUpdater={stateUpdater}
+          videos={backupVideos} />
+      </div>
       <div className={successAlert ? 'success-alert' : 'd-none'}>
         <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
+
       </div>
-      <SearchBar
-        stateUpdater={stateUpdater}
-        videos={backupVideos} />
       <div className='main-buttons'>
         <Button className='inline-button'
           onClick={ascendingOrder}
@@ -119,16 +122,16 @@ const YouTubeVideos = () => {
             <div key={index} className='video-and-details-wrapper'>
               <Title title={video.title} />
               <EmbeddedVideos id={video_id} />
-              <Votes vote={video.rating} video={video} 
-                videos={videos} rating={video.rating} stateUpdater={stateUpdater}/>
+              <Votes vote={video.rating} video={video}
+                videos={videos} rating={video.rating} stateUpdater={stateUpdater} />
               <DeleteButton
                 id={video.id} videoRemover={videoRemover} title={video.title}
-                 />
+              />
             </div>
           );
         })}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
