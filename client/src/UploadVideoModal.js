@@ -29,9 +29,11 @@ const UploadVideoModal = ({ addNewVideo }) => {
     const match = url.match(regExp);
     if (title === '' && showModal) {
       setTitleErrorAlert(true)
-    } else if ((url === '' || !match) && showModal) {
+    } else if (url === '' && showModal) {
       setUrlErrorAlert(true)
-    } else if (title !== '' && match) {
+    } else if (!match ) {
+      setUrlErrorAlert(true)
+    }else if (title !== '' && url !== '' && match) {
       addNewVideo(title, url);
     }
     const requestBody = { title: title, url: url }
@@ -42,7 +44,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
     })
       .then(response => response.json())
       .then(data => console.log(data));
-    if (title !== '' && url !== '') {
+    if (title !== '' && url !== '' && match) {
       setTitle('');
       setUrl('');
       setShowModal(false)

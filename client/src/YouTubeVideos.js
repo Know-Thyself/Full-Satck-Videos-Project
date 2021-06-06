@@ -98,7 +98,7 @@ const YouTubeVideos = () => {
       <div className='main-buttons-outer-container'>
         <div className='main-buttons'>
           <div className='asc-desc-order'>
-            <h3 className='order-by'>Order By:&nbsp;</h3>
+            <h3 className='order-by'>Order By Votes:&nbsp;</h3>
             <Button className=''
               onClick={ascendingOrder}
               variant='contained'
