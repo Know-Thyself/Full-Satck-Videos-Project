@@ -36,8 +36,8 @@ const DeleteButton = ({ id, videoRemover, title }) => {
         aria-describedby="alert-dialog-description">
         <DialogTitle className='alert-primary' id="alert-dialog-title">{"Are you sure you want to delete this video?"}</DialogTitle>
         <DialogContent className='alert-primary'>
-          <DialogContentText id="alert-dialog-description">
-            This Video by the title '{title}' will be permanently removed from our database. <br/>Of course, you can add it later if you change your mind. The one thing you need to remember is that it will lose all of it's votes it has had so far as votes for newly added videos starts from 0.
+          <DialogContentText aria-aria-labelledby='alert-dialog-title' id="alert-dialog-description">
+            The video: '{title}' will be permanently removed from our database. <br/>Of course, you can add it later if you change your mind. However, the video will lose all of it's votes it has had so far as votes for newly added videos starts from 0.
           </DialogContentText>
         </DialogContent>
         <DialogActions className='alert-primary'>
