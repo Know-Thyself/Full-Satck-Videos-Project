@@ -17,6 +17,7 @@ const YouTubeVideos = () => {
   const [videos, setVideos] = useState([]);
   const [backupVideos, setBackupVideos] = useState([]);
   const [successAlert, setSuccessAlert] = useState(false);
+  const [deleteAlert, setDeleteAlert] = useState(false);
 
   useEffect(() => {
     fetch('/api')
@@ -62,7 +63,7 @@ const YouTubeVideos = () => {
     const hideSuccessAlert = () => {
       setSuccessAlert(false)
     }
-    setTimeout(hideSuccessAlert, 4000);
+    setTimeout(hideSuccessAlert, 5000);
     return setVideos(newArray);
   };
 
@@ -71,6 +72,11 @@ const YouTubeVideos = () => {
       (video) => video.id !== id
     );
     setVideos(remainingVideos);
+    setDeleteAlert(true);
+    const hideDeleteAlert = () => {
+      setDeleteAlert(false)
+    }
+    setTimeout(hideDeleteAlert, 5000);
     fetch(`/api/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -94,6 +100,9 @@ const YouTubeVideos = () => {
       </div>
       <div className={successAlert ? 'success-alert' : 'd-none'}>
         <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
+      </div>
+      <div className={deleteAlert ? 'success-alert' : 'd-none'}>
+        <Alert className='alert-success' onClose={() => setDeleteAlert(false)}>Success! — Your videos is successfully deleted!</Alert>
       </div>
       <div className='main-buttons-outer-container'>
         <div className='main-buttons'>

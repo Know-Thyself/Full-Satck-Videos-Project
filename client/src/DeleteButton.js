@@ -21,7 +21,8 @@ const DeleteButton = ({ id, videoRemover, title }) => {
   return (
     <div className='delete-button-container'>
       <div>
-        <Button variant='contained'
+        <Button 
+          variant='contained'
           color='secondary'
           className='delete-button'
           startIcon={<DeleteIcon />} onClick={openDialogBox}>
@@ -36,11 +37,11 @@ const DeleteButton = ({ id, videoRemover, title }) => {
         <DialogTitle className='alert-primary' id="alert-dialog-title">{"Are you sure you want to delete this video?"}</DialogTitle>
         <DialogContent className='alert-primary'>
           <DialogContentText id="alert-dialog-description">
-            This Video by the title '{title}' will be permanently removed.
+            This Video by the title '{title}' will be permanently removed from our database. <br/>Of course, you can add it later if you change your mind. The one thing you need to remember is that it will lose all of it's votes it has had so far as votes for newly added videos starts from 0.
           </DialogContentText>
         </DialogContent>
         <DialogActions className='alert-primary'>
-          <Button onClick={cancelDelete} variant='contained' color="primary">
+          <Button onClick={cancelDelete} variant='outlined' color='primary'>
             Cancel
           </Button>
           <Button
@@ -49,9 +50,8 @@ const DeleteButton = ({ id, videoRemover, title }) => {
               videoRemover(id);
               setOpen(false)
             }}
-            variant='contained'
+            variant='outlined'
             color='secondary'
-            className='delete-button'
             startIcon={<DeleteIcon />}>
             Delete
           </Button>

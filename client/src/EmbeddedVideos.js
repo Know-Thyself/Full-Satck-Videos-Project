@@ -4,8 +4,8 @@ const EmbeddedVideo = ({ id }) => {
   return (
     <iframe
       className='embedded-video'
-      width='458'
-      height='315'
+      width='100%'
+      height='215'
       src={'https://www.youtube.com/embed/' + id}
       title='YouTube video player'
       frameBorder='0'
