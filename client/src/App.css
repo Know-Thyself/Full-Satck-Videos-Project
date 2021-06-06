@@ -80,18 +80,11 @@ html, body {
 .modal .modal-content {
   background-color: #a9bcff;
 }
+
 .modal-text {
   font-size: 1.2em !important;
   background-color:  #bbc9fa !important;
   color:  #bbc9fa !important;
-}
-.add-button {
-  background-color: #9f9deb !important;
-  color: #100e26;
-  font-weight: bold !important;
-}
-.add-button:hover {
-  background-color: #9390f1 !important;
 }
 
 .upload-and-cancel-buttons {

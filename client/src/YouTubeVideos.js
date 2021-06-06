@@ -94,7 +94,6 @@ const YouTubeVideos = () => {
       </div>
       <div className={successAlert ? 'success-alert' : 'd-none'}>
         <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
-
       </div>
       <div className='main-buttons'>
         <Button className='inline-button'

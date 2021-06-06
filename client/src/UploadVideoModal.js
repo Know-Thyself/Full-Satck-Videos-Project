@@ -51,7 +51,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
 
   return (
     <>
-      <Button className='add-button' variant='contained' onClick={handleShow}>
+      <Button className='add-button' variant='contained' color='primary' onClick={handleShow}>
         Add Video &nbsp;
         <AddToQueueRoundedIcon />
       </Button>
