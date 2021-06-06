@@ -95,25 +95,29 @@ const YouTubeVideos = () => {
       <div className={successAlert ? 'success-alert' : 'd-none'}>
         <Alert className='alert-success' onClose={() => setSuccessAlert(false)}>Success! — Your videos is successfully uploaded!</Alert>
       </div>
-      <div className='main-buttons'>
-        <Button className='inline-button'
-          onClick={ascendingOrder}
-          variant='contained'
-          color='primary'>
-          Asc Order &nbsp;
+      <div className='main-buttons-outer-container'>
+        <div className='main-buttons'>
+          <div className='asc-desc-order'>
+            <h3 className='order-by'>Order By:&nbsp;</h3>
+            <Button className=''
+              onClick={ascendingOrder}
+              variant='contained'
+              color='primary'>
+              Asc &nbsp;
           <ArrowUpwardIcon />
-        </Button>
-        <div className="divider" />
-        <UploadVideoModal className='inline-button' addNewVideo={addNewVideo} />
-        <div className="divider" />
-        <Button className='inline-button'
-          onClick={descendingOrder}
-          variant='contained'
-          color='primary'>
-          Desc Order &nbsp;
+            </Button>
+            <Button className=''
+              onClick={descendingOrder}
+              variant='contained'
+              color='primary'>
+              Desc &nbsp;
           <ArrowDownwardIcon />
-        </Button>
-      </div>
+            </Button>
+          </div>
+          <UploadVideoModal className='' addNewVideo={addNewVideo} />
+        </div>
+        </div>
+ 
       <div key='displayWrapper' className='main-container'>
         {videos.map((video, index) => {
           const video_id = video.url.split('v=')[1];
