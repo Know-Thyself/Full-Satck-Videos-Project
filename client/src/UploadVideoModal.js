@@ -11,12 +11,13 @@ const UploadVideoModal = ({ addNewVideo }) => {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
   const [titleErrorAlert, setTitleErrorAlert] = useState(false);
-  const [urlErrorAlert, setUrlErrorAlert] = useState(false);
+  const [emptyUrlAlert, seEmptyUrlAlert] = useState(false);
+  const [invalidUrlAlert, setInvalidUrlAlert] = useState(false);
 
   const cancelButtonHandler = () => {
     setShowModal(false);
     setTitleErrorAlert(false);
-    setUrlErrorAlert(false)
+    seEmptyUrlAlert(false)
     setTitle('');
     setUrl('');
   };
@@ -30,9 +31,9 @@ const UploadVideoModal = ({ addNewVideo }) => {
     if (title === '' && showModal) {
       setTitleErrorAlert(true)
     } else if (url === '' && showModal) {
-      setUrlErrorAlert(true)
+      seEmptyUrlAlert(true)
     } else if (!match ) {
-      setUrlErrorAlert(true)
+      setInvalidUrlAlert(true)
     }else if (title !== '' && url !== '' && match) {
       addNewVideo(title, url);
     }
@@ -85,7 +86,8 @@ const UploadVideoModal = ({ addNewVideo }) => {
             }}
             value={title}
           />
-          <Alert className={urlErrorAlert ? 'alert' : 'd-none'} severity='error' onClose={() => setUrlErrorAlert(false)}>Failure! — You have not entered a valid URL!</Alert>
+          <Alert className={emptyUrlAlert ? 'alert' : 'd-none'} severity='error' onClose={() => seEmptyUrlAlert(false)}>Failure! — A URL field can not be empty!</Alert>
+          <Alert className={invalidUrlAlert ? 'alert' : 'd-none'} severity='error' onClose={() => setInvalidUrlAlert(false)}>Failure! — Invalid URL!</Alert>
           <TextField
             className='modal-content modal-text'
             margin="dense"
@@ -94,7 +96,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
             type="url"
             fullWidth
             onChange={(e) => {
-              setUrlErrorAlert(false);
+              seEmptyUrlAlert(false);
               setUrl(e.target.value);
             }}
             value={url}

@@ -117,7 +117,6 @@ const YouTubeVideos = () => {
           <UploadVideoModal className='' addNewVideo={addNewVideo} />
         </div>
         </div>
- 
       <div key='displayWrapper' className='main-container'>
         {videos.map((video, index) => {
           const video_id = video.url.split('v=')[1];

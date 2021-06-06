@@ -31,7 +31,7 @@ html, body {
 .search-input-wrapper {
   background-color: #9f9deb;
   display: flex;
-  width: 95%;
+  width: 60%;
   align-items: center;
   justify-content: space-evenly;
   margin: auto;
@@ -191,6 +191,9 @@ html, body {
 
 }
 @media screen and (min-width: 300px)  and (max-width: 1024px) {
+  .search-input-wrapper{
+    width: 75%;
+  }
   .video-and-details-wrapper {
     display: grid;
     grid-template-rows: 0.5fr 3fr 0.25fr 0.25fr;
