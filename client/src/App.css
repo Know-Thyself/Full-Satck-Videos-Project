@@ -9,7 +9,7 @@ html, body {
 .App {
   display: block;
   font-family: 'Courgette', cursive;
-  background-color: #3f3f61;
+  /* background-color: #3f3f61; */
   overflow-x: hidden;
   width: 100%;
   text-align: center;
@@ -29,7 +29,7 @@ html, body {
 }
 
 .search-input-wrapper {
-  background-color: #9f9deb;
+  background-color: white;
   display: flex;
   width: 60%;
   align-items: center;
@@ -40,7 +40,7 @@ html, body {
 }
 
 .search-bar {
-  background-color: #9f9deb;
+  background-color: white;
   font-size: 1.25em;
   font-weight: lighter;
   border-radius: 0.25em;
@@ -84,7 +84,7 @@ html, body {
   display: block;
   margin: auto;
   text-align: center;
-  color: aliceblue;
+  color: #252336;
   font-size: 1.25em;
 }
 

@@ -11,7 +11,12 @@ const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  host: 'ec2-54-228-99-58.eu-west-1.compute.amazonaws.com',
+  port: 5432,
+  user: 'imafvaigscemsf',
+  password: '2efd1a6c9e18ce53012a6158f26ccdad8243fefa77f91fd34b96f80ad5771a70',
+  database: 'd55e7mui6ph6gm'
 });
 
 client.connect();
