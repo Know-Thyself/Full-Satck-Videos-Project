@@ -3,6 +3,7 @@
 
 html, body {
   min-width: fit-content;
+  background-color: thistle;
   margin: 0;
 }
 
@@ -24,12 +25,13 @@ html, body {
   font-family: 'Courgette', cursive;
   background-color: #252336;
   color: aliceblue;
+  color: thistle;
   width: 100%;
   padding: 1.5em 0 1.5em 0;
 }
 
 .search-input-wrapper {
-  background-color: white;
+  background-color: thistle;
   display: flex;
   width: 60%;
   align-items: center;
@@ -40,7 +42,7 @@ html, body {
 }
 
 .search-bar {
-  background-color: white;
+  background-color: thistle;
   font-size: 1.25em;
   font-weight: lighter;
   border-radius: 0.25em;
@@ -130,22 +132,25 @@ html, body {
   width: 100%;
   place-items: center;
   margin: auto;
-  background-color: #9f9deb;
+  background-color: thistle;
 }
 
 .video-title {
-  font-size: x-large;
+  font-size: large;
   width: 100%;
-  height: 100%;
+  height: 60%;
   color: #100e26;
   display: grid;
   place-items: center;
   background-color: #252336;
+  border-radius: 10px 100px / 120px;
   color: aliceblue;
+  color: thistle;
 }
 
 .embedded-video {
   width: 100% !important;
+  margin-top: -0.75rem;
 }
 
 .votes-container {
@@ -216,10 +221,10 @@ html, body {
 @media screen and (min-width: 1024px) and (max-width: 1448px) {
   .main-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 1fr;
     place-items: center;
-    gap: 2em;
+    gap: 2.5em;
     margin: auto;
   }
 }
@@ -227,7 +232,7 @@ html, body {
 @media screen and (min-width: 1448px) and (max-width: 1960px)  {
   .main-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: 1fr;
     place-items: center;
     gap: 2em;
@@ -242,7 +247,7 @@ html, body {
 @media screen and (min-width: 1960px) {
   .main-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: 1fr;
     place-items: center;
     gap: 2em;
