@@ -68,7 +68,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
         <Modal.Header closeButton>
           <Modal.Title>Video Uploader Modal</Modal.Title>
         </Modal.Header>
-        <Modal.Body className='modal-fullscreen-lg-down'>
+        <Modal.Body className='modal-fullscreen-lg-down modal-body'>
           Please enter a title and a valid url of a YouTube video
           <Alert className={titleErrorAlert ? 'alert-failure' : 'd-none'} severity='error' onClose={() => setTitleErrorAlert(false)}>Failure! — Title field should not be empty!</Alert>
           <TextField

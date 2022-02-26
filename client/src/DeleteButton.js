@@ -34,13 +34,13 @@ const DeleteButton = ({ id, videoRemover, title }) => {
         onClose={cancelDelete}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description">
-        <DialogTitle className='alert-primary' id="alert-dialog-title">{"Are you sure you want to delete this video?"}</DialogTitle>
-        <DialogContent className='alert-primary'>
-          <DialogContentText aria-aria-labelledby='alert-dialog-title' id="alert-dialog-description">
+        <DialogTitle className='alert-primary delete-dialog' id="alert-dialog-title">{"Are you sure you want to delete this video?"}</DialogTitle>
+        <DialogContent className='alert-primary dialog-content'>
+          <DialogContentText aria-labelledby='alert-dialog-title' id="alert-dialog-description">
             The video: '{title}' will be permanently removed from our database. <br/>Of course, you can add it later if you change your mind. However, the video will lose all of it's votes it has had so far as votes for newly added videos starts from 0.
           </DialogContentText>
         </DialogContent>
-        <DialogActions className='alert-primary'>
+        <DialogActions className='alert-primary dialog-content'>
           <Button onClick={cancelDelete} variant='outlined' color='primary'>
             Cancel
           </Button>

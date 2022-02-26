@@ -112,20 +112,18 @@ const YouTubeVideos = () => {
               onClick={ascendingOrder}
               variant='contained'
               color='primary'>
-              Asc &nbsp;
-          <ArrowUpwardIcon />
+              Asc &nbsp;<ArrowUpwardIcon />
             </Button>
             <Button className=''
               onClick={descendingOrder}
               variant='contained'
               color='primary'>
-              Desc &nbsp;
-          <ArrowDownwardIcon />
+              Desc &nbsp;<ArrowDownwardIcon />
             </Button>
           </div>
-          <UploadVideoModal className='' addNewVideo={addNewVideo} />
+          <UploadVideoModal className='upload-button' addNewVideo={addNewVideo} />
         </div>
-        </div>
+      </div>
       <div key='displayWrapper' className='main-container'>
         {videos.map((video, index) => {
           const video_id = video.url.split('v=')[1];
@@ -133,11 +131,14 @@ const YouTubeVideos = () => {
             <div key={index} className='video-and-details-wrapper'>
               <Title title={video.title} />
               <EmbeddedVideos id={video_id} />
-              <Votes vote={video.rating} video={video}
+              <div className='vote-and-delete'>
+                <Votes vote={video.rating} video={video}
                 videos={videos} rating={video.rating} stateUpdater={stateUpdater} />
-              <DeleteButton
+                <DeleteButton
                 id={video.id} videoRemover={videoRemover} title={video.title}
-              />
+                />
+              </div>
+            
             </div>
           );
         })}
