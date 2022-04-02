@@ -18,7 +18,7 @@ const YouTubeVideos = () => {
   const [backupVideos, setBackupVideos] = useState([]);
   const [successAlert, setSuccessAlert] = useState(false);
   const [deleteAlert, setDeleteAlert] = useState(false);
-  console.log(new Date());
+
   function youtubeIdParser(url) {
     let regExp =
       /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;

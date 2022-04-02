@@ -1,16 +1,7 @@
 import React from "react";
 
 const EmbeddedVideo = ({ id }) => {
-  const currentDate = new Date();
-
-  const currentDayOfMonth = currentDate.getDate();
-  const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
-  const currentYear = currentDate.getFullYear();
-
-  const dateString =
-    currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
-  // "27-11-2020"
-  console.log(dateString);
+  console.log(id);
   return (
     <iframe
       className="embedded-video"
