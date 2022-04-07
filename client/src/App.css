@@ -119,6 +119,16 @@ html, body {
   margin: auto;
   margin-bottom: -2.5em;
 }
+.video-and-details-wrapper:only-child {
+  grid-template-columns: 60vw;
+  grid-template-rows: 1fr 3fr 0.5fr 0.5fr;
+  height: 60vh;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+  margin: auto;
+  margin-left: 16.5vw;
+}
 .video-title {
   font-size: large;
   width: 100%;
@@ -133,6 +143,7 @@ html, body {
   width: 100% !important;
   margin-top: -0.75rem;
 }
+
 .vote-and-delete {
   width: 100%;
 }
