@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EmbeddedVideo = ({ id }) => {
+const EmbeddedVideo = ({ id, loading }) => {
 	return (
-		<iframe
+		<>
+			{loading ? (<iframe
 			className='embedded-video'
 			width='100%'
 			height='215'
@@ -11,8 +12,11 @@ const EmbeddedVideo = ({ id }) => {
 			title='YouTube video player'
 			frameBorder='0'
 			allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-			allowFullScreen
-		></iframe>
+			allowFullScreen /> 
+			) : (
+				<span className='loading-span'>Loading video...</span>
+			)}
+		</>
 	);
 };
 

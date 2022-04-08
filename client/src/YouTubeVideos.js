@@ -18,6 +18,7 @@ const YouTubeVideos = () => {
 	const [backupVideos, setBackupVideos] = useState([]);
 	const [successAlert, setSuccessAlert] = useState(false);
 	const [deleteAlert, setDeleteAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 	function youtubeIdParser(url) {
 		let regExp =
@@ -32,6 +33,10 @@ const YouTubeVideos = () => {
 			.then((data) => {
 				setVideos(data);
 				setBackupVideos(data);
+        setTimeout(() => {
+          setLoading(true);
+        }, 5000);
+        
 			})
 			.catch((err) => console.error(err));
 	}, []);
@@ -142,7 +147,7 @@ const YouTubeVideos = () => {
 					return (
 						<div key={index} className='video-and-details-wrapper'>
 							<Title title={video.title} />
-							<EmbeddedVideos id={video_id} />
+							<EmbeddedVideos id={video_id} loading={loading} />
 							<div className='vote-and-delete'>
 								<Votes
 									vote={video.rating}
