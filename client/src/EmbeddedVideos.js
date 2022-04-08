@@ -6,7 +6,7 @@ const EmbeddedVideo = ({ id, loading }) => {
 		<>
 			{loading ? (<iframe
 			className='embedded-video'
-			width='100%'
+			width='560'
 			height='215'
 			src={`https://www.youtube.com/embed/${id}`}
 			title='YouTube video player'
