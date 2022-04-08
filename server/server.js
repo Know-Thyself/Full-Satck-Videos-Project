@@ -1,8 +1,14 @@
-const express = require('express');
-const { Client } = require('pg');
-require('dotenv').config();
+import express from 'express';
+import pg from 'pg';
+import dotenv from 'dotenv';
+import path from 'path';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+dotenv.config();
+const Client = pg.Client;
 const app = express();
-const path = require('path');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
