@@ -16,7 +16,7 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
-app.use(cookieParser());
+
 
 const isProduction = process.env.NODE_ENV === 'production';
 const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
@@ -30,22 +30,33 @@ const client = new Client({
 });
 
 client.connect();
-let sessionOptions = {
+
+const sessionConfig = {
 	secret: process.env.SESSION_SECRET,
-	saveUninitialized: true,
-	resave: true,
+	saveUninitialized: false,
+	resave: false,
+	httpOnly: true,
 	cookie: {
-		sameSite: 'Lax',
+		sameSite: 'lax',
 		secure: false,
 		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
 	},
 };
 
-if (process.env.NODE_ENV !== 'dev') {
-	sessionOptions.cookie.secure = true;
-	sessionOptions.cookie.sameSite = 'none';
+if (process.env.NODE_ENV === 'production') {
+	app.set('trust proxy', 1);
+	sessionConfig.cookie.secure = true;
+	sessionConfig.cookie.sameSite = 'none';
 }
-app.use(session(sessionOptions));
+
+app.use(cookieParser());
+app.use(session(sessionConfig));
+
+if (app.get('env') === 'production') {
+	app.enable('trust proxy');
+	app.use(httpsOnly());
+}
+
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader(
@@ -59,8 +70,7 @@ app.use((req, res, next) => {
 		'Access-Control-Allow-Methods',
 		'Access-Control-Allow-Origin',
 		'Origin, X-Requested-With, Content-Type, Accept'
-	);
-	res.cookie(sessionOptions);
+	);	
 	next();
 });
 
