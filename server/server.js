@@ -2,19 +2,19 @@ import express from 'express';
 import pg from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
-import cors from 'cors';
-import { fileURLToPath } from 'url';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
+// import cors from 'cors';
+// import { fileURLToPath } from 'url';
+// import cookieParser from 'cookie-parser';
+// import session from 'express-session';
 dotenv.config();
 const Client = pg.Client;
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
+// const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 
@@ -31,31 +31,31 @@ const client = new Client({
 
 client.connect();
 
-const sessionConfig = {
-	secret: process.env.SESSION_SECRET,
-	saveUninitialized: false,
-	resave: false,
-	httpOnly: true,
-	cookie: {
-		sameSite: 'lax',
-		secure: false,
-		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
-	},
-};
+// const sessionConfig = {
+// 	secret: process.env.SESSION_SECRET,
+// 	saveUninitialized: false,
+// 	resave: false,
+// 	httpOnly: true,
+// 	cookie: {
+// 		sameSite: 'lax',
+// 		secure: false,
+// 		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
+// 	},
+// };
 
-if (process.env.NODE_ENV === 'production') {
-	app.set('trust proxy', 1);
-	sessionConfig.cookie.secure = true;
-	sessionConfig.cookie.sameSite = 'none';
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	app.set('trust proxy', 1);
+// 	sessionConfig.cookie.secure = true;
+// 	sessionConfig.cookie.sameSite = 'none';
+// }
 
-app.use(cookieParser());
-app.use(session(sessionConfig));
+// app.use(cookieParser());
+// app.use(session(sessionConfig));
 
-if (app.get('env') === 'production') {
-	app.enable('trust proxy');
-	app.use(httpsOnly());
-}
+// if (app.get('env') === 'production') {
+// 	app.enable('trust proxy');
+// 	app.use(httpsOnly());
+// }
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
