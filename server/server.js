@@ -16,7 +16,6 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 // app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
-// app.use(cookieParser());
 
 const isProduction = process.env.NODE_ENV === 'production';
 const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
@@ -46,6 +45,7 @@ client.connect();
 // 	sessionOptions.cookie.sameSite = 'none';
 // }
 // app.use(session(sessionOptions));
+
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader(
@@ -59,6 +59,7 @@ app.use((req, res, next) => {
 		'Access-Control-Allow-Methods',
 		'Access-Control-Allow-Origin',
 		'Origin, X-Requested-With, Content-Type, Accept'
+
 	);
 	next();
 });
