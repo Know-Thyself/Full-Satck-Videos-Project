@@ -3,13 +3,13 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
 // import cors from 'cors';
-// import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url';
 // import cookieParser from 'cookie-parser';
 // import session from 'express-session';
 dotenv.config();
 const Client = pg.Client;
 const app = express();
-// const __filename = fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 8000;
 
