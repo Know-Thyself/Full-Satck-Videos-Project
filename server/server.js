@@ -18,10 +18,11 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 const isProduction = process.env.NODE_ENV === 'production';
-const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+// const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
 
 const client = new Client({
-	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+	// connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+	connectionString: process.env.DATABASE_URL,
 	connectionTimeoutMillis: 5000,
 	ssl: {
 		rejectUnauthorized: false,
@@ -69,7 +70,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api', async (req, res) => {
-	const videosQuery = 'SELECT * FROM videos';
+	const videosQuery = 'SELECT * FROM youtube_videos';
 	try {
 		const result = await client.query(videosQuery);
 		res.json(result.rows);
@@ -119,7 +120,7 @@ app.post('/api', (req, res) => {
 		const newPosted = newVideo.posted;
 
 		const InsertQuery =
-			'INSERT INTO videos (id, title, url, rating, posted) VALUES ($1, $2, $3, $4, $5)';
+			'INSERT INTO youtube_videos (id, title, url, rating, posted) VALUES ($1, $2, $3, $4, $5)';
 		client
 			.query(InsertQuery, [newID, newTitle, newURL, newRating, newPosted])
 			.then(() =>

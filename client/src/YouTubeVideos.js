@@ -26,17 +26,21 @@ const YouTubeVideos = () => {
 		let match = url.match(regExp);
 		return match && match[7].length === 11 ? match[7] : false;
 	}
-
+  // fetch('/api')
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			console.log(data)
+	// 		})
 	useEffect(() => {
 		fetch('/api')
 			.then((res) => res.json())
 			.then((data) => {
+				console.log(data)
 				setVideos(data);
 				setBackupVideos(data);
         setTimeout(() => {
           setLoading(true);
-        }, 5000);
-        
+        }, 5000)
 			})
 			.catch((err) => console.error(err));
 	}, []);
