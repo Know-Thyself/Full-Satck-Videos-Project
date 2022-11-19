@@ -20,7 +20,7 @@
 		"react-scripts": "^5.0.1",
 		"web-vitals": "^1.1.2"
 	},
-	"proxy": "https://youtube-videos.onrender.com",
+	"proxy": "http://localhost:8000",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
