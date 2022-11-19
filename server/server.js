@@ -20,14 +20,15 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 const isProduction = process.env.NODE_ENV === 'production';
 // const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
 
-const client = new Client({
-	// connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-	connectionString: process.env.DATABASE_URL,
-	connectionTimeoutMillis: 5000,
-	ssl: {
-		rejectUnauthorized: false,
-	},
-});
+// const client = new Client({
+// 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+// 	connectionString: process.env.DATABASE_URL,
+// 	connectionTimeoutMillis: 5000,
+// 	ssl: {
+// 		rejectUnauthorized: false,
+// 	},
+// });
+const client = new Client(process.env.DATABASE_URL);
 
 client.connect();
 // let sessionOptions = {
