@@ -46,7 +46,7 @@ client.connect(function (err) {
 
 //const client = new Client(process.env.DATABASE_URL);
 
-client.connect();
+// client.connect();
 // let sessionOptions = {
 // 	secret: process.env.SESSION_SECRET,
 // 	saveUninitialized: true,
