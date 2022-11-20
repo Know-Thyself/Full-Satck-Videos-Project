@@ -2,7 +2,7 @@ import express from 'express';
 import pg from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
-// import cors from 'cors';
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 // import cookieParser from 'cookie-parser';
 // import session from 'express-session';
@@ -14,21 +14,37 @@ const __dirname = path.dirname(__filename);
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 const isProduction = process.env.NODE_ENV === 'production';
-// const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
 
 // const client = new Client({
 // 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-// 	connectionString: process.env.DATABASE_URL,
 // 	connectionTimeoutMillis: 5000,
 // 	ssl: {
 // 		rejectUnauthorized: false,
 // 	},
 // });
-const client = new Client(process.env.DATABASE_URL);
+
+var conString = isProduction ? process.env.DATABASE_URL : connectionString; //Can be found in the Details page
+var client = new Client(conString);
+client.connect(function (err) {
+	if (err) {
+		return console.error('could not connect to postgres', err);
+	}
+	client.query('SELECT NOW() AS "theTime"', function (err, result) {
+		if (err) {
+			return console.error('error running query', err);
+		}
+		console.log(result.rows[0].theTime);
+		// >> output: 2018-08-23T14:02:57.117Z
+		client.end();
+	});
+});
+
+//const client = new Client(process.env.DATABASE_URL);
 
 client.connect();
 // let sessionOptions = {
@@ -61,7 +77,6 @@ app.use((req, res, next) => {
 		'Access-Control-Allow-Methods',
 		'Access-Control-Allow-Origin',
 		'Origin, X-Requested-With, Content-Type, Accept'
-
 	);
 	next();
 });
@@ -81,7 +96,7 @@ app.get('/api', async (req, res) => {
 });
 
 app.get('/api/sort/asc', async (req, res) => {
-	const videosAscQuery = 'SELECT * FROM videos ORDER BY rating ASC';
+	const videosAscQuery = 'SELECT * FROM youtube_videos ORDER BY rating ASC';
 	try {
 		const result = await client.query(videosAscQuery);
 		res.json(result.rows);
@@ -91,7 +106,7 @@ app.get('/api/sort/asc', async (req, res) => {
 });
 
 app.get('/api/sort/dec', async (req, res) => {
-	const videosDescQuery = 'SELECT * FROM videos ORDER BY rating DESC';
+	const videosDescQuery = 'SELECT * FROM youtube_videos ORDER BY rating DESC';
 	try {
 		const result = await client.query(videosDescQuery);
 		res.json(result.rows);
@@ -152,7 +167,7 @@ app.post('/api', (req, res) => {
 app.patch('/api', (req, res) => {
 	const updatedRating = req.body.rating;
 	const videoID = req.body.id;
-	const voteQuery = `UPDATE videos SET rating=${updatedRating} WHERE id=${videoID}`;
+	const voteQuery = `UPDATE youtube_videos SET rating=${updatedRating} WHERE id=${videoID}`;
 
 	client
 		.query(voteQuery)
@@ -166,7 +181,7 @@ app.patch('/api', (req, res) => {
 
 app.get('/api/:id', async (req, res) => {
 	const id = req.params.id;
-	const query = `SELECT * FROM videos WHERE id = ${id}`;
+	const query = `SELECT * FROM youtube_videos WHERE id = ${id}`;
 	try {
 		const result = await client.query(query);
 		if (result.rowCount === 1) res.json(result.rows);
@@ -181,7 +196,7 @@ app.get('/api/:id', async (req, res) => {
 
 app.delete('/api/:id', (req, res) => {
 	const id = req.params.id;
-	const deleteQuery = `DELETE FROM videos WHERE id=${id}`;
+	const deleteQuery = `DELETE FROM youtube_videos WHERE id=${id}`;
 	if (id) {
 		client
 			.query(deleteQuery)
