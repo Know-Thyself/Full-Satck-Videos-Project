@@ -3,35 +3,36 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 
 const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
-  const voteUpdater = (videoObj, totalVote) => {
-    let updatedVideo = { ...videoObj, rating: totalVote };
-    let newData = [...videos];
-    const i = newData.findIndex((video) => video.id === videoObj.id);
-    newData[i] = updatedVideo;
+	const voteUpdater = (videoObj, totalVote) => {
+		let updatedVideo = { ...videoObj, rating: totalVote };
+		let newData = [...videos];
+		const i = newData.findIndex((video) => video.id === videoObj.id);
+		newData[i] = updatedVideo;
 
-    const requestBody = updatedVideo;
-    fetch('/videos', { method: 'PATCH', headers: { 'Content-Type': 'application/json', 'Field-Name': 'Accept-Patch' }, body: JSON.stringify(requestBody) })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+		const requestBody = updatedVideo;
+		fetch('/videos', {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				'Field-Name': 'Accept-Patch',
+			},
+			body: JSON.stringify(requestBody),
+		})
+			.then((res) => res.json())
+			.then((data) => console.log(data))
+			.catch((err) => console.log(err));
+		stateUpdater(newData);
+	};
 
-    return stateUpdater(newData);
-  };
-
-  function kFormatter(num) {
-		// return Math.abs(num) > 999
-		// 	? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'K'
-		// 	: Math.sign(num) * Math.abs(num);
-    if (num > 999 && num < 1000000) {
-			return (num / 1000).toFixed(1) + 'K'; 
-		} else if (num > 1000000) {
-			return (num / 1000000).toFixed(1) + 'M'; 
-		} else if (num < 900) {
-			return num; 
-		}
+	function kFormatter(num) {
+		return Math.abs(num) >= 1000000
+			? Math.sign(num) * (Math.abs(num) / 1000000).toFixed(1) + 'M'
+			: Math.abs(num) >= 1000 && Math.abs(num) < 1000000
+			? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'K'
+			: Math.sign(num) * Math.abs(num);
 	}
 
-  return (
+	return (
 		<div className='votes-container'>
 			<ThumbUpAltIcon
 				onClick={() => voteUpdater(video, rating + 1)}

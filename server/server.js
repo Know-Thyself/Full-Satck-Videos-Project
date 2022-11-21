@@ -2,6 +2,7 @@ import express from 'express';
 import client from './db.js';
 import path from 'path';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -17,6 +18,7 @@ import deleteVideo from './router/deleteVideo.js';
 
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.use((req, res, next) => {
