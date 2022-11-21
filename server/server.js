@@ -100,11 +100,12 @@ app.get('/api/sort/dec', async (req, res) => {
 app.post('/api', (req, res) => {
 	let title = req.body.title;
 	let url = req.body.url;
+	let rating = req.body.rating;
 	let newVideo = {
 		id: Date.now(),
 		title: title,
 		url: url,
-		rating: 0,
+		rating: rating,
 		posted: new Date().toString(),
 	};
 	const regExp =

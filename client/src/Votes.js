@@ -18,24 +18,29 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
     return stateUpdater(newData);
   };
 
-  return (
-    <div className='votes-container'>
-      <ThumbUpAltIcon
-        onClick={() => voteUpdater(video, rating + 1)}
-        className='like'
-        fontSize='large'
-        variant='contained'
-      />
-      <h3 className='votes'>Votes: {vote}</h3>
-      <ThumbDownAltIcon
-        onClick={() => voteUpdater(video, rating - 1)}
-        className='dislike'
-        fontSize='large'
-        variant='contained'
-      />
-    </div>
+  function kFormatter(num) {
+		return Math.abs(num) > 999
+			? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'K'
+			: Math.sign(num) * Math.abs(num);
+	}
 
-  );
+  return (
+		<div className='votes-container'>
+			<ThumbUpAltIcon
+				onClick={() => voteUpdater(video, rating + 1)}
+				className='like'
+				fontSize='large'
+				variant='contained'
+			/>
+			<h3 className='votes'>Votes: {kFormatter(vote)}</h3>
+			<ThumbDownAltIcon
+				onClick={() => voteUpdater(video, rating - 1)}
+				className='dislike'
+				fontSize='large'
+				variant='contained'
+			/>
+		</div>
+	);
 };
 
 export default Votes;

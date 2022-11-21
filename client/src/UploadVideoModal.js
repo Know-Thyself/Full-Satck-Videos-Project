@@ -10,6 +10,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [votes, setVotes] = useState('');
   const [titleErrorAlert, setTitleErrorAlert] = useState(false);
   const [emptyUrlAlert, seEmptyUrlAlert] = useState(false);
   const [invalidUrlAlert, setInvalidUrlAlert] = useState(false);
@@ -35,9 +36,9 @@ const UploadVideoModal = ({ addNewVideo }) => {
     } else if (!match ) {
       setInvalidUrlAlert(true)
     }else if (title !== '' && url !== '' && match) {
-      addNewVideo(title, url);
+      addNewVideo(title, url, votes);
     }
-    const requestBody = { title: title, url: url }
+    const requestBody = { title: title, url: url, rating: votes }
     fetch('/api', {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -48,73 +49,124 @@ const UploadVideoModal = ({ addNewVideo }) => {
     if (title !== '' && url !== '' && match) {
       setTitle('');
       setUrl('');
+      setVotes('');
       setShowModal(false)
     }
   };
 
   return (
-    <>
-      <Button className='add-button' variant='contained' color='primary' onClick={handleShow}>
-        Add Video &nbsp;
-        <AddToQueueRoundedIcon />
-      </Button>
-      <Modal
-        className='modal'
-        show={showModal}
-        onHide={cancelButtonHandler}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Video Uploader Modal</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className='modal-fullscreen-lg-down modal-body'>
-          Please enter a title and a valid url of a YouTube video
-          <Alert className={titleErrorAlert ? 'alert-failure' : 'd-none'} severity='error' onClose={() => setTitleErrorAlert(false)}>Failure! — Title field should not be empty!</Alert>
-          <TextField
-            className='modal-content modal-text'
-            autoFocus
-            margin="dense"
-            id="title"
-            label="Title"
-            type="text"
-            style={{color:'red'}}
-            fullWidth
-            onChange={(e) => {
-              setTitleErrorAlert(false);
-              setTitle(e.target.value);
-            }}
-            value={title}
-          />
-          <Alert className={emptyUrlAlert ? 'alert' : 'd-none'} severity='error' onClose={() => seEmptyUrlAlert(false)}>Failure! — A URL field can not be empty!</Alert>
-          <Alert className={invalidUrlAlert ? 'alert' : 'd-none'} severity='error' onClose={() => setInvalidUrlAlert(false)}>Failure! — Invalid URL!</Alert>
-          <TextField
-            className='modal-content modal-text'
-            margin="dense"
-            id="url"
-            label="URL"
-            type="url"
-            fullWidth
-            onChange={(e) => {
-              seEmptyUrlAlert(false);
-              setUrl(e.target.value);
-            }}
-            value={url}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <div className='upload-and-cancel-buttons'>
-            <Button type='cancel' className='cancel-button'
-              variant='contained' color='default' onClick={cancelButtonHandler}>Cancel</Button>
-            <Button onClick={submitNewVideo} type='submit' className='submit-btn'
-              variant='contained' color='primary'>
-              Upload
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
+		<>
+			<Button
+				className='add-button'
+				variant='contained'
+				color='primary'
+				onClick={handleShow}
+			>
+				Add Video &nbsp;
+				<AddToQueueRoundedIcon />
+			</Button>
+			<Modal
+				className='modal'
+				show={showModal}
+				onHide={cancelButtonHandler}
+				backdrop='static'
+				keyboard={false}
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>Video Uploader Modal</Modal.Title>
+				</Modal.Header>
+				<Modal.Body className='modal-fullscreen-lg-down modal-body'>
+					Please enter a title and a valid url of a YouTube video
+					<Alert
+						className={titleErrorAlert ? 'alert-failure' : 'd-none'}
+						severity='error'
+						onClose={() => setTitleErrorAlert(false)}
+					>
+						Failure! — Title field should not be empty!
+					</Alert>
+					<TextField
+						className='modal-content modal-text'
+						autoFocus
+						variant='outlined'
+						margin='dense'
+						id='title'
+						label='Title'
+						type='text'
+						style={{ color: 'red' }}
+						fullWidth
+						onChange={(e) => {
+							setTitleErrorAlert(false);
+							setTitle(e.target.value);
+						}}
+						value={title}
+					/>
+					<Alert
+						className={emptyUrlAlert ? 'alert' : 'd-none'}
+						severity='error'
+						onClose={() => seEmptyUrlAlert(false)}
+					>
+						Failure! — A URL field can not be empty!
+					</Alert>
+					<Alert
+						className={invalidUrlAlert ? 'alert' : 'd-none'}
+						severity='error'
+						onClose={() => setInvalidUrlAlert(false)}
+					>
+						Failure! — Invalid URL!
+					</Alert>
+					<TextField
+						className='modal-content modal-text'
+						variant='outlined'
+						margin='dense'
+						id='url'
+						label='URL'
+						type='url'
+						fullWidth
+						onChange={(e) => {
+							seEmptyUrlAlert(false);
+							setUrl(e.target.value);
+						}}
+						value={url}
+					/>
+					<TextField
+						className='modal-content modal-text'
+						variant='outlined'
+						margin='dense'
+						id='votes'
+						label='Number of likes'
+						type='number'
+						fullWidth
+						onChange={(e) => {
+							setVotes(e.target.value);
+						}}
+						value={votes}
+					/>
+				</Modal.Body>
+				<Modal.Footer>
+					<div className='upload-and-cancel-buttons'>
+						<Button
+							type='cancel'
+							className='cancel-button'
+							variant='contained'
+							color='default'
+							onClick={cancelButtonHandler}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={submitNewVideo}
+							type='submit'
+							className='submit-btn'
+							variant='contained'
+							color='primary'
+						>
+							Upload
+						</Button>
+					</div>
+				</Modal.Footer>
+			</Modal>
+		</>
+	);
 };
 
 export default UploadVideoModal;

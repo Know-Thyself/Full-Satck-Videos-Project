@@ -59,14 +59,14 @@ const YouTubeVideos = () => {
 		setVideos(sortedArray);
 	};
 
-	const addNewVideo = (title, url) => {
+	const addNewVideo = (title, url, rating) => {
 		let newArray = videos;
 		newArray = [
 			{
 				id: Date.now(),
 				title: title,
 				url: url,
-				rating: 0,
+				rating: rating,
 				posted: new Date().toString(),
 			},
 			...newArray,
