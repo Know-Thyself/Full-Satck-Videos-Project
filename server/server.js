@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
+// import cookieParser from 'cookie-parser';
+// import session from 'express-session';
 dotenv.config();
 const Client = pg.Client;
 const app = express();
@@ -29,22 +29,22 @@ const client = new Client({
 });
 client.connect();
 
-let sessionOptions = {
-	secret: process.env.SESSION_SECRET,
-	saveUninitialized: true,
-	resave: true,
-	cookie: {
-		sameSite: 'Lax',
-		secure: false,
-		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
-	},
-};
+// let sessionOptions = {
+// 	secret: process.env.SESSION_SECRET,
+// 	saveUninitialized: true,
+// 	resave: true,
+// 	cookie: {
+// 		sameSite: 'Lax',
+// 		secure: false,
+// 		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
+// 	},
+// };
 
-if (process.env.NODE_ENV !== 'dev') {
-	sessionOptions.cookie.secure = true;
-	sessionOptions.cookie.sameSite = 'none';
-}
-app.use(session(sessionOptions));
+// if (process.env.NODE_ENV !== 'dev') {
+// 	sessionOptions.cookie.secure = true;
+// 	sessionOptions.cookie.sameSite = 'none';
+// }
+// app.use(session(sessionOptions));
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
