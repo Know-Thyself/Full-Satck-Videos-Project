@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
-// import cookieParser from 'cookie-parser';
-// import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 dotenv.config();
 const Client = pg.Client;
 const app = express();
@@ -27,42 +27,24 @@ const client = new Client({
 		rejectUnauthorized: false,
 	},
 });
-
-//var conString = isProduction ? process.env.DATABASE_URL : connectionString; //Can be found in the Details page
-// var client = new Client(conString);
-// client.connect(function (err) {
-// 	if (err) {
-// 		return console.error('could not connect to postgres', err);
-// 	}
-// 	client.query('SELECT NOW() AS "theTime"', function (err, result) {
-// 		if (err) {
-// 			return console.error('error running query', err);
-// 		}
-// 		console.log(result.rows[0].theTime);
-// 		// >> output: 2018-08-23T14:02:57.117Z
-// 		client.end();
-// 	});
-// });
-
-//const client = new Client(process.env.DATABASE_URL);
-
 client.connect();
-// let sessionOptions = {
-// 	secret: process.env.SESSION_SECRET,
-// 	saveUninitialized: true,
-// 	resave: true,
-// 	cookie: {
-// 		sameSite: 'Lax',
-// 		secure: false,
-// 		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
-// 	},
-// };
 
-// if (process.env.NODE_ENV !== 'dev') {
-// 	sessionOptions.cookie.secure = true;
-// 	sessionOptions.cookie.sameSite = 'none';
-// }
-// app.use(session(sessionOptions));
+let sessionOptions = {
+	secret: process.env.SESSION_SECRET,
+	saveUninitialized: true,
+	resave: true,
+	cookie: {
+		sameSite: 'Lax',
+		secure: false,
+		maxAge: 1000 * 60 * 60 * 24 * 30, // One month
+	},
+};
+
+if (process.env.NODE_ENV !== 'dev') {
+	sessionOptions.cookie.secure = true;
+	sessionOptions.cookie.sameSite = 'none';
+}
+app.use(session(sessionOptions));
 
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
