@@ -20,33 +20,33 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 const isProduction = process.env.NODE_ENV === 'production';
 const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
 
-// const client = new Client({
-// 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-// 	connectionTimeoutMillis: 5000,
-// 	ssl: {
-// 		rejectUnauthorized: false,
-// 	},
-// });
-
-var conString = isProduction ? process.env.DATABASE_URL : connectionString; //Can be found in the Details page
-var client = new Client(conString);
-client.connect(function (err) {
-	if (err) {
-		return console.error('could not connect to postgres', err);
-	}
-	client.query('SELECT NOW() AS "theTime"', function (err, result) {
-		if (err) {
-			return console.error('error running query', err);
-		}
-		console.log(result.rows[0].theTime);
-		// >> output: 2018-08-23T14:02:57.117Z
-		client.end();
-	});
+const client = new Client({
+	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+	connectionTimeoutMillis: 5000,
+	ssl: {
+		rejectUnauthorized: false,
+	},
 });
+
+//var conString = isProduction ? process.env.DATABASE_URL : connectionString; //Can be found in the Details page
+// var client = new Client(conString);
+// client.connect(function (err) {
+// 	if (err) {
+// 		return console.error('could not connect to postgres', err);
+// 	}
+// 	client.query('SELECT NOW() AS "theTime"', function (err, result) {
+// 		if (err) {
+// 			return console.error('error running query', err);
+// 		}
+// 		console.log(result.rows[0].theTime);
+// 		// >> output: 2018-08-23T14:02:57.117Z
+// 		client.end();
+// 	});
+// });
 
 //const client = new Client(process.env.DATABASE_URL);
 
-// client.connect();
+client.connect();
 // let sessionOptions = {
 // 	secret: process.env.SESSION_SECRET,
 // 	saveUninitialized: true,
