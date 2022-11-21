@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import client from '../db.js';
 
-router.get('/api', async (req, res) => {
+router.get('/', async (req, res) => {
 	const videosQuery = 'SELECT * FROM youtube_videos';
 	try {
 		const result = await client.query(videosQuery);
