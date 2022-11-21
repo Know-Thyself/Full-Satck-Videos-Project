@@ -28,7 +28,7 @@ const YouTubeVideos = () => {
 	}
 
 	useEffect(() => {
-		fetch('/api')
+		fetch('/videos')
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data)
@@ -83,7 +83,7 @@ const YouTubeVideos = () => {
 			setDeleteAlert(false);
 		};
 		setTimeout(hideDeleteAlert, 5000);
-		fetch(`/api/${id}`, {
+		fetch(`/videos/${id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
 		})

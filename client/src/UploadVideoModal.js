@@ -39,7 +39,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
       addNewVideo(title, url, votes);
     }
     const requestBody = { title: title, url: url, rating: votes }
-    fetch('/api', {
+    fetch('/videos', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: { 'Content-Type': 'application/json' }
