@@ -10,11 +10,12 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 		newData[i] = updatedVideo;
 
 		const requestBody = updatedVideo;
+		console.log(requestBody)
 		fetch('/videos', {
 			method: 'PATCH',
 			headers: {
-				'Content-Type': 'application/json',
-				'Field-Name': 'Accept-Patch',
+				'Content-Type': 'application/json'
+				// 'Field-Name': 'Accept-Patch',
 			},
 			body: JSON.stringify(requestBody),
 		})
@@ -24,7 +25,7 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 		stateUpdater(newData);
 	};
 
-	function kFormatter(num) {
+	function numToStringFormatter(num) {
 		return Math.abs(num) >= 1000000
 			? Math.sign(num) * (Math.abs(num) / 1000000).toFixed(1) + 'M'
 			: Math.abs(num) >= 1000 && Math.abs(num) < 1000000
@@ -40,7 +41,7 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 				fontSize='large'
 				variant='contained'
 			/>
-			<h3 className='votes'>Votes: {kFormatter(vote)}</h3>
+			<h3 className='votes'>Votes: {numToStringFormatter(vote)}</h3>
 			<ThumbDownAltIcon
 				onClick={() => voteUpdater(video, rating - 1)}
 				className='dislike'

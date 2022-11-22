@@ -31,7 +31,6 @@ const YouTubeVideos = () => {
 		fetch('/videos')
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data)
 				setVideos(data);
 				setBackupVideos(data);
         setTimeout(() => {
