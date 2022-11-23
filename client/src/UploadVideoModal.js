@@ -91,6 +91,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
 						margin='dense'
 						id='title'
 						label='Title'
+						required
 						type='text'
 						style={{ color: 'red' }}
 						fullWidth
@@ -121,6 +122,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
 						id='url'
 						label='URL'
 						type='url'
+						required
 						fullWidth
 						onChange={(e) => {
 							seEmptyUrlAlert(false);
