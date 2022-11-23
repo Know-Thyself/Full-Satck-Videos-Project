@@ -10,7 +10,7 @@ router.patch('/', (req, res) => {
 		.query(voteQuery)
 		.then(() =>
 			res.json({
-				message: `The vote of the video by the id ${videoId} is successfully updated!`,
+				message: `The number of likes of the video by the id ${videoId} is successfully updated!`,
 			})
 		)
 		.catch((err) => console.error(err));

@@ -148,16 +148,16 @@ html, body {
   margin-top: -0.75rem;
 }
 
-.vote-and-delete {
+.like-and-delete-wrapper {
   width: 100%;
 }
-.votes-container {
+.likes-container {
   display: inline-flex;
   justify-content: center;
   width: 100%;
   color: #100e26;
 }
-.votes {
+.likes {
   font-size: larger;
   margin-top: 0.25em;
 }
@@ -211,7 +211,7 @@ html, body {
   .main-container {
     grid-template-columns: repeat(1, 1fr);
   }
-  .votes {
+  .likes {
     margin-bottom: 1em;
     font-size: medium;
   }

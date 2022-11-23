@@ -9,7 +9,7 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import Title from './Title';
 import EmbeddedVideos from './EmbeddedVideos';
-import Votes from './Votes';
+import Likes from './Likes';
 import DeleteButton from './DeleteButton';
 import Footer from './Footer';
 
@@ -147,12 +147,11 @@ const YouTubeVideos = () => {
 						<div key={index} className='video-and-details-wrapper'>
 							<Title title={video.title} />
 							<EmbeddedVideos id={video_id} loading={loading} />
-							<div className='vote-and-delete'>
-								<Votes
-									vote={video.rating}
+							<div className='like-and-delete-wrapper'>
+								<Likes
+									likes={video.rating}
 									video={video}
 									videos={videos}
-									rating={video.rating}
 									stateUpdater={stateUpdater}
 								/>
 								<DeleteButton

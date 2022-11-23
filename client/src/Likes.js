@@ -2,7 +2,7 @@ import React from 'react';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 
-const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
+const Likes = ({ video, videos, likes, stateUpdater }) => {
 	const voteUpdater = (videoObj, totalVote) => {
 		let updatedVideo = { ...videoObj, rating: totalVote };
 		let newData = [...videos];
@@ -10,17 +10,15 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 		newData[i] = updatedVideo;
 
 		const requestBody = updatedVideo;
-		console.log(requestBody)
 		fetch('/videos', {
 			method: 'PATCH',
 			headers: {
-				'Content-Type': 'application/json'
-				// 'Field-Name': 'Accept-Patch',
+				'Content-Type': 'application/json',
+				'Field-Name': 'Accept-Patch',
 			},
 			body: JSON.stringify(requestBody),
 		})
 			.then((res) => res.json())
-			.then((data) => console.log(data))
 			.catch((err) => console.log(err));
 		stateUpdater(newData);
 	};
@@ -34,16 +32,16 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 	}
 
 	return (
-		<div className='votes-container'>
+		<div className='likes-container'>
 			<ThumbUpAltIcon
-				onClick={() => voteUpdater(video, rating + 1)}
+				onClick={() => voteUpdater(video, likes + 1)}
 				className='like'
 				fontSize='large'
 				variant='contained'
 			/>
-			<h3 className='votes'>Votes: {numToStringFormatter(vote)}</h3>
+			<h3 className='likes'>Votes: {numToStringFormatter(likes)}</h3>
 			<ThumbDownAltIcon
-				onClick={() => voteUpdater(video, rating - 1)}
+				onClick={() => voteUpdater(video, likes - 1)}
 				className='dislike'
 				fontSize='large'
 				variant='contained'
@@ -52,4 +50,4 @@ const Votes = ({ video, videos, vote, rating, stateUpdater }) => {
 	);
 };
 
-export default Votes;
+export default Likes;
