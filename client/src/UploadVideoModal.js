@@ -1,60 +1,60 @@
-import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
-import Modal from 'react-bootstrap/Modal';
-import AddToQueueRoundedIcon from '@material-ui/icons/AddToQueueRounded';
-import TextField from '@material-ui/core/TextField';
-import Alert from '@material-ui/lab/Alert';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react'
+import { Button } from '@material-ui/core'
+import Modal from 'react-bootstrap/Modal'
+import AddToQueueRoundedIcon from '@material-ui/icons/AddToQueueRounded'
+import TextField from '@material-ui/core/TextField'
+import Alert from '@material-ui/lab/Alert'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const UploadVideoModal = ({ addNewVideo }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
-  const [votes, setVotes] = useState('');
-  const [titleErrorAlert, setTitleErrorAlert] = useState(false);
-  const [emptyUrlAlert, seEmptyUrlAlert] = useState(false);
-  const [invalidUrlAlert, setInvalidUrlAlert] = useState(false);
+	const [showModal, setShowModal] = useState(false)
+	const [title, setTitle] = useState('')
+	const [url, setUrl] = useState('')
+	const [votes, setVotes] = useState('')
+	const [titleErrorAlert, setTitleErrorAlert] = useState(false)
+	const [emptyUrlAlert, seEmptyUrlAlert] = useState(false)
+	const [invalidUrlAlert, setInvalidUrlAlert] = useState(false)
 
-  const cancelButtonHandler = () => {
-    setShowModal(false);
-    setTitleErrorAlert(false);
-    seEmptyUrlAlert(false)
-    setTitle('');
-    setUrl('');
-  };
-  const handleShow = () => setShowModal(true);
+	const cancelButtonHandler = () => {
+		setShowModal(false)
+		setTitleErrorAlert(false)
+		seEmptyUrlAlert(false)
+		setTitle('')
+		setUrl('')
+	}
+	const handleShow = () => setShowModal(true)
 
-  const submitNewVideo = (e) => {
-    e.preventDefault();
-    const regExp =
-      /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    const match = url.match(regExp);
-    if (title === '' && showModal) {
-      setTitleErrorAlert(true)
-    } else if (url === '' && showModal) {
-      seEmptyUrlAlert(true)
-    } else if (!match ) {
-      setInvalidUrlAlert(true)
-    }else if (title !== '' && url !== '' && match) {
-      addNewVideo(title, url, votes);
-    }
-    const requestBody = { title: title, url: url, rating: votes }
-    fetch('/videos', {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(response => response.json())
-      .then(data => console.log(data));
-    if (title !== '' && url !== '' && match) {
-      setTitle('');
-      setUrl('');
-      setVotes('');
-      setShowModal(false)
-    }
-  };
+	const submitNewVideo = (e) => {
+		e.preventDefault()
+		const regExp =
+			/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+		const match = url.match(regExp)
+		if (title === '' && showModal) {
+			setTitleErrorAlert(true)
+		} else if (url === '' && showModal) {
+			seEmptyUrlAlert(true)
+		} else if (!match) {
+			setInvalidUrlAlert(true)
+		} else if (title !== '' && url !== '' && match) {
+			addNewVideo(title, url, votes)
+		}
+		const requestBody = { title: title, url: url, rating: votes }
+		fetch('/videos', {
+			method: 'POST',
+			body: JSON.stringify(requestBody),
+			headers: { 'Content-Type': 'application/json' },
+		})
+			.then((response) => response.json())
+			.then((data) => console.log(data))
+		if (title !== '' && url !== '' && match) {
+			setTitle('')
+			setUrl('')
+			setVotes('')
+			setShowModal(false)
+		}
+	}
 
-  return (
+	return (
 		<>
 			<Button
 				className='add-button'
@@ -96,8 +96,8 @@ const UploadVideoModal = ({ addNewVideo }) => {
 						style={{ color: 'red' }}
 						fullWidth
 						onChange={(e) => {
-							setTitleErrorAlert(false);
-							setTitle(e.target.value);
+							setTitleErrorAlert(false)
+							setTitle(e.target.value)
 						}}
 						value={title}
 					/>
@@ -125,8 +125,8 @@ const UploadVideoModal = ({ addNewVideo }) => {
 						required
 						fullWidth
 						onChange={(e) => {
-							seEmptyUrlAlert(false);
-							setUrl(e.target.value);
+							seEmptyUrlAlert(false)
+							setUrl(e.target.value)
 						}}
 						value={url}
 					/>
@@ -139,7 +139,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
 						type='number'
 						fullWidth
 						onChange={(e) => {
-							setVotes(e.target.value);
+							setVotes(e.target.value)
 						}}
 						value={votes}
 					/>
@@ -168,7 +168,7 @@ const UploadVideoModal = ({ addNewVideo }) => {
 				</Modal.Footer>
 			</Modal>
 		</>
-	);
-};
+	)
+}
 
-export default UploadVideoModal;
+export default UploadVideoModal

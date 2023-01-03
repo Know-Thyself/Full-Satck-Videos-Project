@@ -1,61 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from '@material-ui/core/Button';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import UploadVideoModal from './UploadVideoModal';
-import Alert from '@material-ui/lab/Alert';
-import Header from './Header';
-import SearchBar from './SearchBar';
-import Title from './Title';
-import EmbeddedVideos from './EmbeddedVideos';
-import Likes from './Likes';
-import DeleteButton from './DeleteButton';
-import Footer from './Footer';
+import React, { useState, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Button from '@material-ui/core/Button'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import UploadVideoModal from './UploadVideoModal'
+import Alert from '@material-ui/lab/Alert'
+import Header from './Header'
+import SearchBar from './SearchBar'
+import Title from './Title'
+import EmbeddedVideos from './EmbeddedVideos'
+import Likes from './Likes'
+import DeleteButton from './DeleteButton'
+import Footer from './Footer'
 
 const YouTubeVideos = () => {
-	const [videos, setVideos] = useState([]);
-	const [backupVideos, setBackupVideos] = useState([]);
-	const [successAlert, setSuccessAlert] = useState(false);
-	const [deleteAlert, setDeleteAlert] = useState(false);
-  const [loading, setLoading] = useState(false);
+	const [videos, setVideos] = useState([])
+	const [backupVideos, setBackupVideos] = useState([])
+	const [successAlert, setSuccessAlert] = useState(false)
+	const [deleteAlert, setDeleteAlert] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	function youtubeIdParser(url) {
 		let regExp =
-			/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-		let match = url.match(regExp);
-		return match && match[7].length === 11 ? match[7] : false;
+			/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+		let match = url.match(regExp)
+		return match && match[7].length === 11 ? match[7] : false
 	}
 
 	useEffect(() => {
 		fetch('/videos')
 			.then((res) => res.json())
 			.then((data) => {
-				setVideos(data);
-				setBackupVideos(data);
-        setTimeout(() => {
-          setLoading(true);
-        }, 5000);
+				setVideos(data)
+				setBackupVideos(data)
+				setTimeout(() => {
+					setLoading(true)
+				}, 5000)
 			})
-			.catch((err) => console.error(err));
-	}, []);
+			.catch((err) => console.error(err))
+	}, [])
 
 	const ascendingOrder = () => {
-		let tempArray = [...backupVideos];
-		let sortedArray = tempArray.sort((a, b) => a.rating - b.rating);
-		console.log(tempArray.sort((a, b) => a.rating - b.rating));
-		setVideos(sortedArray);
+		let tempArray = [...backupVideos]
+		let sortedArray = tempArray.sort((a, b) => a.rating - b.rating)
+		console.log(tempArray.sort((a, b) => a.rating - b.rating))
+		setVideos(sortedArray)
 	}
 
 	const descendingOrder = () => {
-		let tempArray = [...backupVideos];
-		let sortedArray = tempArray.sort((a, b) => b.rating - a.rating);
-		console.log(tempArray.sort((a, b) => b.rating - a.rating));
-		setVideos(sortedArray);
-	};
+		let tempArray = [...backupVideos]
+		let sortedArray = tempArray.sort((a, b) => b.rating - a.rating)
+		console.log(tempArray.sort((a, b) => b.rating - a.rating))
+		setVideos(sortedArray)
+	}
 
 	const addNewVideo = (title, url, rating) => {
-		let newArray = videos;
+		let newArray = videos
 		newArray = [
 			{
 				id: Date.now(),
@@ -65,35 +65,35 @@ const YouTubeVideos = () => {
 				posted: new Date().toString(),
 			},
 			...newArray,
-		];
-		setSuccessAlert(true);
+		]
+		setSuccessAlert(true)
 		const hideSuccessAlert = () => {
-			setSuccessAlert(false);
-		};
-		setTimeout(hideSuccessAlert, 5000);
-		return setVideos(newArray);
-	};
+			setSuccessAlert(false)
+		}
+		setTimeout(hideSuccessAlert, 5000)
+		return setVideos(newArray)
+	}
 
 	const videoRemover = (id) => {
-		const remainingVideos = videos.filter((video) => video.id !== id);
-		setVideos(remainingVideos);
-		setDeleteAlert(true);
+		const remainingVideos = videos.filter((video) => video.id !== id)
+		setVideos(remainingVideos)
+		setDeleteAlert(true)
 		const hideDeleteAlert = () => {
-			setDeleteAlert(false);
-		};
-		setTimeout(hideDeleteAlert, 5000);
+			setDeleteAlert(false)
+		}
+		setTimeout(hideDeleteAlert, 5000)
 		fetch(`/videos/${id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
 		})
 			.then((res) => res.json())
 			.then((data) => console.log(data))
-			.catch((err) => console.log(err));
-	};
+			.catch((err) => console.log(err))
+	}
 	const stateUpdater = (updatedState) => {
-		let newState = updatedState;
-		return setVideos(newState);
-	};
+		let newState = updatedState
+		return setVideos(newState)
+	}
 
 	return (
 		<div key='mainWrapper'>
@@ -142,7 +142,7 @@ const YouTubeVideos = () => {
 			</div>
 			<div key='displayWrapper' className='main-container'>
 				{videos.map((video, index) => {
-					const video_id = youtubeIdParser(video.url);
+					const video_id = youtubeIdParser(video.url)
 					return (
 						<div key={index} className='video-and-details-wrapper'>
 							<Title title={video.title} />
@@ -161,12 +161,12 @@ const YouTubeVideos = () => {
 								/>
 							</div>
 						</div>
-					);
+					)
 				})}
 			</div>
 			<Footer />
 		</div>
-	);
-};
+	)
+}
 
-export default YouTubeVideos;
+export default YouTubeVideos

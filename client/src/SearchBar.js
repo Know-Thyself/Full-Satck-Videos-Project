@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const SearchBar = ({ stateUpdater, videos }) => {
-  const [searchInput, setSearchInput] = useState('');
+	const [searchInput, setSearchInput] = useState('')
 
-  const handleSearchInput = (e) => {
-    setSearchInput(e.target.value.toLowerCase());
-    const searchResult = videos.filter((video) =>
-      video.title.toLowerCase().includes(searchInput)
-    );
-    stateUpdater(searchResult);
-    if (e.target.value === '') stateUpdater(videos);
-  };
+	const handleSearchInput = (e) => {
+		setSearchInput(e.target.value.toLowerCase())
+		const searchResult = videos.filter((video) =>
+			video.title.toLowerCase().includes(searchInput)
+		)
+		stateUpdater(searchResult)
+		if (e.target.value === '') stateUpdater(videos)
+	}
 
-  return (
-    <div key='input-form' className='search-input-wrapper'>
-      <input
-        key='search-input'
-        type='text'
-        className='search-bar'
-        placeholder='Search for a video ...'
-        value={searchInput}
-        onChange={handleSearchInput}
-      />
-      <i key='fasIcon' className='fas fa-search'></i>
-    </div>
-  );
-};
+	return (
+		<div key='input-form' className='search-input-wrapper'>
+			<input
+				key='search-input'
+				type='text'
+				className='search-bar'
+				placeholder='Search for a video ...'
+				value={searchInput}
+				onChange={handleSearchInput}
+			/>
+			<i key='fasIcon' className='fas fa-search'></i>
+		</div>
+	)
+}
 
-export default SearchBar;
+export default SearchBar
